@@ -1,0 +1,1206 @@
+<main class="content">
+    <div class="container-fluid p-0">
+        <!-- <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Enquery</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item active" aria-current="page">Enquery</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Enquiries</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <!-- <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item active" aria-current="page">Enquiry</li>
+                            </ol> -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row mb-2 mb-lg-4">
+            <div class="col-md-6 text-end mt-n1">
+                <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                    <li class="list-inline-item">
+                        <button class="btn btn-primary btn-lg" style="position: relative; left: 525px;" (click)="openEnqueryAddModal()">Add New <i
+                                class="fas fa-plus"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+
+        <div class="row mb-2 mb-lg-4 d-flex align-items-center hdng-btm">
+            <div class="col-md-12 d-lg-flex align-items-center hdng-btm">
+                <div class="col-md-6">
+                    <!-- <a class="btn btn-dark btn-lg me-3">Edit Page Layout <i class="fas fa-pen"></i></a> -->
+                    <div class="d-none d-sm-inline-block">
+                        <div class="input-group input-group-navbar">
+                            <input type="text" class="form-control" placeholder="Keyword Search" aria-label="Search"
+                                (keyup)="globalSearch($event)">
+                            <button class="btn" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-search align-middle">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end mt-n1">
+                    <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+
+
+                        <!-- <li class="list-inline-item">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                                <button id="switchFrst" onclick="toggleBtnSales()" type="button"
+                                    class="btn btn-outline-darker btn-lg">Sales <i
+                                        class="fas fa-cart-arrow-down"></i></button>
+                                <button id="switchScnd" onclick="toggleBtnExternal()" type="button"
+                                    class="btn btn-outline-darker btn-lg switchActiveScnd">External <i
+                                        class="fas fa-external-link-alt"></i></button>
+                            </div>
+                        </li> -->
+
+
+                        <!-- <li class="list-inline-item">
+                            <button class="btn btn-info btn-lg">Sync <i class="fas fa-sync-alt"></i></button>
+                        </li> -->
+                        <li class="list-inline-item">
+                            <button class="btn btn-primary btn-lg" data-bs-target="#addContactModal"
+                                data-bs-toggle="modal" data-bs-dismiss="modal" (click)="openEnqueryAddModal()" *ngIf="permissionData.addPem == 1">Add New
+                                <i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="list-inline-item">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                                <button id="switchList" type="button"
+                                    class="btn btn-outline-dark btn-xs switchActiveList" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="List View" (click)="listView()">
+                                    <img src="assets/images/list-view.svg" alt="list-view">
+                                </button>
+                                <button id="switchGrid" type="button" class="btn btn-outline-dark btn-xs"
+                                    (click)="KanbanView()">
+                                    <img src="assets/images/grid-view.svg" alt="list-view" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="Kanban View">
+                                </button>
+                            </div>
+                        </li>
+
+
+
+                        <!-- <li class="list-inline-item icon-border me-0">
+                            <a class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="More"></a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item">Edit this contact</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change contact image</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change record owner</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change to lead</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Export details</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Add new task for this contact</a>
+                            </div>
+                        </li> -->
+
+                        <!-- <li class="list-inline-item icon-border me-0">
+                            <a class="d-inline-block align-middle" mat-button [matMenuTriggerFor]="menu">
+                                <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Edit this enquiry</button>
+                                <button mat-menu-item>Change employee image</button>
+                                <button mat-menu-item>Delete enquiry</button>
+                                <button mat-menu-item>Change record owner</button>
+                                <button mat-menu-item>Change to lead</button>
+                                <button mat-menu-item>Export details</button>
+                                <button mat-menu-item>Add new task for this employee</button>
+                            </mat-menu>
+                        </li> -->
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>My Enquiries</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length">
+                                        <label>Records per page
+                                            <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button type="button" class="btn btn-md bg-white px-4"
+                                    (click)="downloadData(2)">CSV</button>
+                                <button type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4" (click)="downloadData(1)">Excel</button>
+                                <button type="button" class="btn bg-white px-4" (click)="multipleUpload()">Upload
+                                    Data</button>
+                                <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false" *ngIf="!kanbanViewFlag" (click) = "hideHeaderButton()">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More">
+                                </button>
+                                <!-- <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    [ngClass]="headerButtonCounter %2 != 0 ? 'show':''" data-bs-toggle="dropdown"
+                                    aria-expanded="false" (click)="hideHeaderButton()">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More">
+                                </button> -->
+
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+
+
+
+                                    <ng-container *ngFor="let th of tableHeader ; let i=index">
+                                        <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                            <span class="col-auto d-block">{{th.title}}</span>
+                                            <div class="form-check form-switch col-auto d-block ms-auto">
+                                                <input class="form-check-input" type="checkbox" id="switch1"
+                                                    [checked]="th.isView" (click)="changeTableView($event, i)">
+                                            </div>
+                                        </a>
+                                        <ng-container *ngIf="i < tableHeader.length-1">
+                                            <div class="dropdown-divider"></div>
+                                        </ng-container>
+                                    </ng-container>
+
+
+
+
+
+                                    
+                                    <!-- <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Organization</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Title</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Lead Status</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Lead Owner</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Lead source</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Lead owner</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch10">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                        <span class="col-auto d-block">Lead type</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch11">
+                                        </div>
+                                    </a> -->
+
+
+
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="table-responsive enquery_div" *ngIf="!kanbanViewFlag">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+
+                                        <ng-container *ngFor="let th of tableHeader">
+                                            <th class=" align-middle" *ngIf="th.isView">{{th.title}}
+                                            </th>
+                                        </ng-container>
+
+
+
+                                        <!-- <th class="sorting align-middle"> Sl No. </th>
+                                        <th class="sorting align-middle"> Enquiry Source </th>
+                                        <th class="sorting align-middle"> Enquiry Type </th>
+                                        <th class="sorting align-middle"> Owner Name </th>
+                                        <th class="sorting align-middle"> Owner Phone No </th>
+                                        <th class="sorting align-middle"> Owner Email </th>
+                                        <th class="sorting align-middle"> Business Name </th>
+                                        <th class="sorting align-middle"> Business Phone No </th>
+                                        <th class="sorting align-middle"> Business Email </th>
+                                        <th class="sorting align-middle"> Business Address </th>
+                                        <th class="sorting align-middle"> Address </th>
+                                        <th class="sorting align-middle"> Country </th>
+                                        <th class="sorting align-middle"> State </th>
+                                        <th class="sorting align-middle"> District </th>
+                                        <th class="sorting align-middle"> City/Village </th>
+                                        <th class="sorting align-middle"> Zone </th>
+                                        <th class="sorting align-middle"> Pincode </th>
+                                        <th class="sorting align-middle"> Notes </th>
+                                        <th class="sorting align-middle"> Employee Type </th>
+                                        <th class="sorting align-middle"> Assigned Employee </th>
+                                        <th class="sorting align-middle"> Assigned Date </th> -->
+                                        <th class="align-middle"> Action </th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th class="align-middle"><input type="text" class="form-control input-sm"
+                                                placeholder="search" (keyup)="searchByEnquirySource($event)">
+
+                                        </th>
+
+                                        <!-- <select class="form-select" (change)="searchByEnquirySource($event)">
+                                            <option [value]="0">All</option>
+                                            <option *ngFor="let data of enquiry_SourceList;" [value]="data.id">
+                                                {{data.leadSourceTypeName}}</option>
+                                        </select> -->
+
+                                        <th class="align-middle">
+
+                                            <input type="text" class="form-control input-sm" placeholder="search"
+                                                (keyup)="searchByEnquiryType($event)">
+
+                                            <!-- <select class="form-select" (change)="searchByEnquiryType($event)">
+                                                <option [value]="0">All</option>
+                                                <option *ngFor="let data of enquiry_TypeList;" [value]="data.contactTypeId">
+                                                    {{data.contactTypeName}}</option>
+                                            </select> -->
+                                        </th>
+                                        <th class="align-middle"><input type="text" placeholder="search"
+                                                class="form-control input-sm" (keyup)="searchByOwnerName($event)"></th>
+                                        <th class="align-middle"><input type="text" placeholder="search"
+                                                class="form-control input-sm" (keyup)="searchByOwnerPhoneNo($event)">
+                                        </th>
+                                        <th class="align-middle"><input type="text" placeholder="search"
+                                                class="form-control input-sm" (keyup)="searchByOwnerEmail($event)"></th>
+                                        <th class="align-middle"><input type="text" placeholder="search"
+                                                class="form-control input-sm" (keyup)="searchByBusinessName($event)">
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr role="row" class="" *ngFor="let data of enqueryData; let i= index;">
+                                        <!-- <td class="align-middle"><input type="checkbox" id="customCheck2"></td> -->
+                                        <!-- <td class="align-middle"></td> -->
+
+
+
+                                        <ng-container *ngFor="let th of tableHeader; let t = index">
+
+
+                                            <td class="align-middle" *ngIf="th.title === 'Sl No' && th.isView">{{offset
+                                                + (i+1)}}</td>
+                                            <td class="align-middle" style="cursor: pointer;"
+                                                *ngIf="th.title === 'Enquiry Source' && th.isView">
+                                                {{data.enquerySource}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Enquiry Type' && th.isView">
+                                                {{data.enquerySourceName}}</td>
+
+
+                                            <td class="align-middle" *ngIf="th.title === 'Owner Name' && th.isView">
+                                                {{data.ownerFirstName}} {{data.ownerLastName}}</td>
+
+                                            <td class="align-middle"
+                                                *ngIf="th.title === 'Owner Phone Number' && th.isView">
+                                                {{data.ownerPhoneNo}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Owner Email' && th.isView">
+                                                {{data.ownerEmail}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Business Name' && th.isView">
+                                                {{data.businessName}}</td>
+
+                                            <td class="align-middle"
+                                                *ngIf="th.title === 'Business Phone Number' && th.isView">
+                                                {{data.businessPhoneNo}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Business Email' && th.isView">
+                                                {{data.businessEmail}}</td>
+
+                                            <td class="align-middle"
+                                                *ngIf="th.title === 'Business Address' && th.isView">
+                                                {{data.businessAddress}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Address' && th.isView">
+                                                {{data.address}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Country' && th.isView">
+                                                {{data.countryName}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'State' && th.isView">
+                                                {{data.stateName}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'District' && th.isView">
+                                                {{data.districtName}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'City/Village' && th.isView">
+                                                {{data.cityVillage}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Zone' && th.isView">
+                                                {{data.zoneName}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Pincode' && th.isView">
+                                                {{data.pinCode}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Notes' && th.isView">
+                                                {{data.notes}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Employee Type' && th.isView">
+                                                {{data.employeeTypeName}}</td>
+
+                                            <td class="align-middle"
+                                                *ngIf="th.title === 'Assigned Employee' && th.isView">
+                                                {{data.assignToUserName}}</td>
+
+                                            <td class="align-middle" *ngIf="th.title === 'Assigned Date' && th.isView">
+                                                {{data.assignDatetime}}</td>
+
+                                            <!-- <td class="align-middle"> {{offset + (i+1)}} </td>                                      
+                                        <td class="align-middle"> {{data.enquerySource}} </td>                                      
+                                        <td class="align-middle"> {{data.enquerySourceName}} </td>                    
+                                        <td class="align-middle"> {{data.ownerFirstName}} {{data.ownerLastName}}</td>                               
+                                        <td class="align-middle"> {{data.ownerPhoneNo}} </td>
+                                        <td class="align-middle"> {{data.ownerEmail}} </td>
+                                        <td class="align-middle"> {{data.businessName}} </td>                                   
+                                        <td class="align-middle"> {{data.businessPhoneNo}} </td>                                       
+                                      <td class="align-middle"> {{data.businessEmail}} </td>                                     
+                                        <td class="align-middle"> {{data.businessAddress}} </td>                                     
+                                        <td class="align-middle"> {{data.address}} </td>                                     
+                                        <td class="align-middle"> {{data.countryName}} </td>                                    
+                                        <td class="align-middle"> {{data.stateName}} </td>                                     
+                                        <td class="align-middle"> {{data.districtName}} </td>
+                                        <td class="align-middle"> {{data.cityVillage}} </td>
+                                        <td class="align-middle"> {{data.zoneName}} </td>
+                                        <td class="align-middle"> {{data.pinCode}} </td>
+                                        <td class="align-middle"> {{data.notes}} </td>
+                                        <td class="align-middle"> {{data.employeeTypeName}} </td>
+                                        <td class="align-middle"> {{data.assignToUserName}} </td>
+                                        <td class="align-middle"> {{data.assignDatetime}} </td> -->
+
+
+                                        </ng-container>
+
+
+                                        <td class="align-middle">
+                                            <a class="d-inline-block align-middle" (click)="editEnq(data.enqueryId)" *ngIf="permissionData.editPem == 1">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+
+                                            <!-- <a class="d-inline-block align-middle" (click) = "remove(data.enqueryId)">
+                                                <img src="assets/images/trash.svg" alt="trash"></a> -->
+
+                                            <a class="d-inline-block align-middle" mat-button
+                                                [matMenuTriggerFor]="menu" *ngIf="permissionData.deletePem == 1">
+                                                <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+
+
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item (click)="editEnq(data.enqueryId)" *ngIf="permissionData.editPem == 1">Edit this
+                                                    enquiry</button>
+                                                <button mat-menu-item (click)="changeRecordOwner(data)" *ngIf="permissionData.editPem == 1">Change
+                                                    record owner</button>
+                                                    <button mat-menu-item (click)="approvalStatus($event)" *ngIf="permissionData.editPem == 1">Approval Status
+                                                        </button>
+                                                        <button mat-menu-item (click)="employeeAssigned($event)" *ngIf="permissionData.editPem == 1">Assign Employee
+                                                        </button>
+                                                <!-- <button mat-menu-item>Export details</button> -->
+                                            </mat-menu>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ----------------------- Grid View-------------------- -->
+
+                        <div class="grid_viw_dv" *ngIf="kanbanViewFlag">
+                            <div class="grid_viw_dv_inr bg-white shadow-lg p-3 rounded-3"
+                                *ngFor="let data of enqueryData">
+                                <div class="col-auto grid_viw_mor_opn">
+                                    <a class="d-inline-block align-middle" mat-button [matMenuTriggerFor]="menu">
+                                        <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="editEnq(data.enqueryId)">Edit this
+                                            enquiry</button>
+                                        <button mat-menu-item (click)="changeRecordOwner(data)">Change record
+                                            owner</button>
+                                        <!-- <button mat-menu-item (click) = "downloadData(2)">Export details</button> -->
+
+                                    </mat-menu>
+
+                                </div>
+                                <span *ngIf="data.enquerySource != null">{{data.enquerySource}}</span>
+                                <span *ngIf="data.enquerySource == null || data.enquerySource == ''">----</span>
+                                <strong *ngIf="data.enquerySourceName != null">{{data.enquerySourceName}}</strong>
+                                <strong
+                                    *ngIf="data.enquerySourceName == null || data.enquerySourceName == ''">----</strong>
+                                <p *ngIf="data.ownerPhoneNo != null"><svg xmlns="http://www.w3.org/2000/svg" width="14"
+                                        height="14" fill="currentColor" class="bi bi-telephone-fill"
+                                        viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                    </svg> {{data.ownerPhoneNo}}</p>
+
+                                <p *ngIf="data.ownerPhoneNo == null || data.ownerPhoneNo == ''"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                    </svg> ----</p>
+                                <span *ngIf="data.businessName != null">{{data.businessName}}</span>
+                                <span *ngIf="data.businessName == null || data.businessName == ''">----</span>
+                                <span *ngIf="data.pinCode != null">{{data.pinCode}}</span>
+                                <span *ngIf="data.pinCode == null || data.pinCode == ''">----</span>
+                                <span *ngIf="data.assignToUserName != null">{{data.assignToUserName}}</span>
+                                <span *ngIf="data.assignToUserName == null || data.assignToUserName == ''">----</span>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>
+                                                    {{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<ng-template #addEnqueryDesign>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" *ngIf="!enquiryModalFlag">Create New Enquiry</h3>
+            <h3 class="modal-title" *ngIf="enquiryModalFlag">Update Enquiry</h3>
+            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn-close" (click)="modalClose()"
+                style="right: 0px !important; top: -10px !important;"></button>
+        </div>
+        <div class="modal-body">
+            <!-- <div class="form-body"> -->
+            <!-- <div class="form-group"> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="enquiry_Source" class="form-label">
+                        <span class="text-danger">*</span>Enquiry Source
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="enquiry_Source"
+                            [(ngModel)]="enquiry_Source">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of enquiry_SourceList" [value]="data.id">
+                                {{data.leadSourceTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="enquiry_Type" class="form-label">
+                        <span class="text-danger">*</span>Enquiry Type
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="enquiry_Type"
+                            [(ngModel)]="enquiry_Type">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of enquiry_TypeList" [value]="data.contactTypeId">
+                                {{data.contactTypeName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerName" class="form-label"><span class="text-danger">*</span>Owner First
+                        Name</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="ownerFirstName" class="form-control" id="ownerFirstName">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerName" class="form-label"><span class="text-danger">*</span>Owner Last
+                        Name</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="ownerLastName" class="form-control" id="ownerLastName">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerPhnNo" class="form-label">
+                        <span class="text-danger">*</span>Owner Phone No.
+                    </label>
+                    <div *ngFor="let obj of ownerPhnNo;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="phone" class="form-control" [(ngModel)]="obj.item"
+                                onkeypress="if(this.value.length >9) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="ownerPhnNo.length >1 "
+                                (click)="removeOwnerPhone(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="ownerPhnNo.length < 2"
+                            (click)="addOwnerphone()">+ Add
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerEmail" class="form-label">Owner Email</label>
+                    <div *ngFor="let obj of ownerEmail;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="email" class="form-control" [(ngModel)]="obj.item">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="ownerEmail.length >1 "
+                                (click)="removeOwnerEmail(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="ownerEmail.length < 2"
+                            (click)="addOwnerEmail()">+ Add
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="address" class="form-label">
+                        <span class="text-danger">*</span>Address</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="address" class="form-control" id="address">
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center;">
+                    <!-- <mat-radio-group aria-label="Select an option" style="text-align: center;">
+                                <mat-radio-button value="new" checked (click)="selectExistingBuisness('new')">New
+                                </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <mat-radio-button value="existing" (click)="selectExistingBuisness('existing')"
+                                    id="existing">Existing</mat-radio-button>
+                            </mat-radio-group>&nbsp; -->
+
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="businessType"
+                        (change)="selectExistingBuisness()">
+                        <mat-radio-button style="margin-left: 10px" [value]="'New'">New
+                        </mat-radio-button>&nbsp;&nbsp;&nbsp;
+                        <mat-radio-button [value]="'Existing'">Existing</mat-radio-button>
+                    </mat-radio-group>
+
+
+                </div>
+                <div class="col-md-12" id="existingBuisness" *ngIf="!isDisabled">
+                    <label for="organizationId" class="form-label">Select Organization</label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="organization"
+                            [(ngModel)]='organizationId' (change)="getOrganizationId()">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of allOrganizationArray" [value]="data.organizationId">
+                                {{data.organizationName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="buisnessName" class="form-label"><span class="text-danger">*</span>Business
+                        Name</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="buisnessName" class="form-control" id="buisnessName"
+                            [readonly]="!isDisabled">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="buisnessAddress" class="form-label"><span class="text-danger">*</span>Business
+                        Address</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="buisnessAddress" class="form-control" id="buisnessAddress"
+                            [readonly]="!isDisabled">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="buisnessPhone" class="form-label"><span class="text-danger"></span>Business
+                        Phone</label>
+                    <div *ngFor="let obj of buisnessPhone;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="phone" class="form-control" [(ngModel)]="obj.item"
+                                [readonly]="!isDisabled"
+                                onkeypress="if(this.value.length >9) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="buisnessPhone.length >1 "
+                                (click)="removeBuisnessPhone(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="buisnessPhone.length < 2"
+                            (click)="addBuisnessPhone()">+ Add
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="buisnessEmail" class="form-label">Business Email</label>
+                    <div *ngFor="let obj of buisnessEmail;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="email" class="form-control" [(ngModel)]="obj.item"
+                                [readonly]="!isDisabled">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="buisnessEmail.length >1 "
+                                (click)="removeBuisnessEmail(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="buisnessEmail.length < 2"
+                            (click)="addBuisnessEmail()">+ Add
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="country" class="form-label">
+                        <span class="text-danger">*</span>Country
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="country"
+                            [(ngModel)]="country" (change)="getCountryId()" [disabled]="!isDisabled">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of country_DataList" [ngValue]="data.countryId">
+                                {{data.countryName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="state" class="form-label">
+                        <span class="text-danger">*</span>State
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="state" [(ngModel)]="state"
+                            (change)="getStateId()" [disabled]="!isDisabled">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of state_DataList" [ngValue]="data.stateId">
+                                {{data.stateName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="district" class="form-label">
+                        <span class="text-danger">*</span>District
+                    </label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="district"
+                            [(ngModel)]="district" (change)="getCityId()" [disabled]="!isDisabled">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of district_DataList" [ngValue]="data.cityId">
+                                {{data.cityName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="zone" class="form-label"><span class="text-danger">*</span>Zone</label>
+                    <select class="form-select" aria-label="Default select example" id="zone" [(ngModel)]="zone"
+                        [disabled]="!isDisabled">
+                        <option value="">Select an option</option>
+                        <option *ngFor="let data of zone_DataList" [ngValue]="data.zoneId">
+                            {{data.zoneName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="city_Village" class="form-label">City/Village</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="city_Village" class="form-control" id="city_Village">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="pinCode" class="form-label">
+                        <span class="text-danger"></span>Pincode</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="pinCode" class="form-control" id="pinCode"
+                            onkeypress="if(this.value.length >5) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="notes" class="form-label">Notes</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="notes" class="form-control" id="notes">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="employeeType" class="form-label"><span class="text-danger">*</span>Employee
+                        Type</label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="employeeType"
+                            [(ngModel)]="employeeType" (change)="getDesignationId()">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of employee_TypeList" [ngValue]="data.designationId">
+                                {{data.designationName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="assignedEmployeeName" class="form-label"><span class="text-danger">*</span>Assigned
+                        Employee</label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="assignedEmployeeName"
+                            [(ngModel)]="assignedEmployee">
+                            <option value="">Select an option</option>
+                            <option *ngFor="let data of assignedEmployee_DataList" [ngValue]="data.userId">
+                                {{data.userName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="assignedDate" class="form-label"><span class="text-danger">*</span>Assigned
+                        Date</label>
+                    <div class="input-group">
+                        <input type="date" [(ngModel)]="assignedDate" class="form-control" id="assignedDate">
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-start">
+                            <button type="button" class="btn btn-success btn-lg" (click)="createEnquery()"
+                                *ngIf="!enquiryModalFlag">Create</button>
+                            <button type="button" class="btn btn-success btn-lg" (click)="editEnquery()"
+                                *ngIf="enquiryModalFlag">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</ng-template>
+
+
+
+
+<!-- <ng-template #deletemodal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-sm-10">
+                        <h4 class="modal-title d-inline-block align-middle me-2">Are you want to sure delete enquiry
+                        </h4>
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-end">
+                        <button type="button" (click)="modalClose()" class="btn-close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-secondary btn-lg me-2" (click)="modalClose()">No</button>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-danger btn-lg me-2" (click)="delete()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template> -->
+
+<!-- -------------------- For Bulk Upload--------- -->
+
+<ng-template #bulkUpload>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-10">
+                        <h3>Bulk Upload Records From File</h3>
+                    </div>
+                    <div class="col-2 d-flex justify-content-end"><button type="button" data-bs-dismiss="modal"
+                            aria-label="Close" class="btn-close" (click)="modalClose()"></button></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="d-block text-center">
+                            <div class="input-button-wrap">
+                                <label class="input-button" for="upload">Upload File</label><br><br>
+                                <input id="upload" type="file" (change)="uploadFile()" accept=".xls,.xlsx"
+                                    style="text-align:right">
+                                <!-- <span>{{orgBulkFileName}}</span> -->
+                            </div>
+                        </div>
+                        <div class="d-block p-3 mb-4 mt-3 text-center" (click)="sampleDownload()">
+                            <a class="text-primary d-flex justify-content-center align-items-center">
+                                <img src="assets/images/bulk-download.svg" alt="download" class="me-3">Download
+                                Sample File</a>
+                        </div>
+                        <div class="d-block">
+                            <p style="text-align: center;">You can import records through an .xls, .xlsx
+                                file.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end mt-3">
+                        <button class="btn btn-primary me-2" type="button" (click)="modalClose()">Cancel <i
+                                class="far fa-times-circle"></i></button>
+                        <button class="btn btn-dark" type="button" (click)="bulkInsert()">Next <i
+                                class="fas fa-chevron-circle-right"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #downloadFile>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-sm-10">
+                        <h4 class="modal-title d-inline-block align-middle me-2">Are you
+                            want to sure download file
+                        </h4>
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-end">
+                        <button type="button" (click)="modalClose()" class="btn-close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-secondary btn-lg me-2" (click)="modalClose()">No</button>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-danger btn-lg me-2" (click)="fileDownload()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+
+<!-- ------------------------------------  Owner Records Update---------------- -->
+
+<ng-template #ownerRecords>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Update Owner Records</h3>
+            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn-close" (click)="modalClose()"
+                style="right: 0px !important; top: -10px !important;"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="ownerName" class="form-label"><span class="text-danger">*</span>Owner First
+                        Name</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="ownerFirstName" class="form-control" id="ownerFirstName">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerName" class="form-label"><span class="text-danger">*</span>Owner Last
+                        Name</label>
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="ownerLastName" class="form-control" id="ownerLastName">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerPhnNo" class="form-label">
+                        <span class="text-danger">*</span>Owner Phone No.
+                    </label>
+                    <div *ngFor="let obj of ownerPhnNo;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="phone" class="form-control" [(ngModel)]="obj.item"
+                                onkeypress="if(this.value.length >9) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="ownerPhnNo.length >1 "
+                                (click)="removeOwnerPhone(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="ownerPhnNo.length < 2"
+                            (click)="addOwnerphone()">+ Add
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-12">
+                    <label for="ownerEmail" class="form-label">Owner Email</label>
+                    <div *ngFor="let obj of ownerEmail;let i =index;">
+                        <div class="input-group">
+                            <input type="text" name="email" class="form-control" [(ngModel)]="obj.item">
+                            <button class="btn btn-outline-danger input-group-height" *ngIf="ownerEmail.length >1 "
+                                (click)="removeOwnerEmail(i)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="btn btn-link p-0 add_field mb-2" *ngIf="ownerEmail.length < 2"
+                            (click)="addOwnerEmail()">+ Add
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-start">
+                                <button type="button" class="btn btn-success btn-lg"
+                                    (click)="ownerRecordUpdate()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #approval>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="status_type" class="form-label">Approval Status</label>
+                    <div class="input-group">
+                        <select class="form-select" aria-label="Default select example" id="status_type"
+                            [(ngModel)]="selectedStatus">
+                            <option value="">Select an options</option>
+                            <option *ngFor="let obj of approvedStatus" [value]="obj.id">
+                                {{obj.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12 pt-2">
+                    <label for="remarks"><span class="text-danger"></span>Remarks</label>
+                    <div class="input-group">
+                        <textarea name="remarks" class="form-control"  rows="4"
+                            style="height: 100px;" [(ngModel)]="statusRemarks" ></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <button type="button" class="btn btn-secondary btn-lg me-2"
+                    (click)="closeModal()">Cancel</button>
+            </div>
+            <div class="col-sm-6 text-center">
+                <button type="button" class="btn btn-danger btn-lg me-2"
+                    (click)="updateApprovalStatus()">Update</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</ng-template>
+
+
+<ng-template #assign>
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h3 class="modal-title" *ngIf="!enquiryModalFlag">Create New Enquiry</h3> -->
+                <h3 class="modal-title" *ngIf="enquiryModalFlag">Update Assigned Employee</h3>
+                <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn-close" (click)="modalClose()"
+                    style="right: 0px !important; top: -10px !important;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <label for="employeeType" class="form-label"><span class="text-danger">*</span>Employee
+                                Type</label>
+                            <div class="input-group">
+                                <select class="form-select" aria-label="Default select example" id="employeeType"
+                                    [(ngModel)]="employeeType" (change)="getDesignationId()">
+                                    <option value="">Select an option</option>
+                                    <option *ngFor="let data of employee_TypeList" [ngValue]="data.designationId">
+                                        {{data.designationName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                 
+                    <div class="col-md-12">
+                        <label for="assignedEmployeeName" class="form-label"><span class="text-danger">*</span>Assigned
+                            Employee</label>
+                        <div class="input-group">
+                            <select class="form-select" aria-label="Default select example" id="assignedEmployeeName"
+                                [(ngModel)]="assignedEmployee">
+                                <option value="">Select an option</option>
+                                <option *ngFor="let data of assignedEmployee_DataList" [ngValue]="data.userId">
+                                    {{data.userName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="assignedDate" class="form-label"><span class="text-danger">*</span>Assigned
+                            Date</label>
+                        <div class="input-group">
+                            <input type="date" [(ngModel)]="assignedDate" class="form-control" id="assignedDate">
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-start">
+                                <!-- <button type="button" class="btn btn-success btn-lg" (click)="createEnquery()"
+                                    *ngIf="!enquiryModalFlag">Create</button> -->
+                                <button type="button" class="btn btn-success btn-lg" (click)="editEnquery()"
+                                    *ngIf="enquiryModalFlag">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      </ng-template>
+

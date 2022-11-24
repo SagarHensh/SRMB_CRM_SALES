@@ -1,0 +1,12 @@
+.allow-checkbox {
+    padding: 0;
+    width: 50px;
+    margin: -2px 0 0;
+}
+
+.allow-checkbox input {
+    display: block;
+    width: 100%;
+    height: 24px;
+}
+

@@ -1,0 +1,26 @@
+button.btn-close.create-user {
+    margin-top: 1px !important;
+}
+.addContactModal.modal .input-button {
+    display: inline-block;
+    padding: 8px 34px !important;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #007FD7;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    z-index: 9;
+    position: relative;
+    margin-right: 20px;
+    line-height: 23px;
+}
+
+.btn-link{
+    text-decoration: none !important;
+}
+
+input[type="file"] {
+    display: none !important;
+}
+

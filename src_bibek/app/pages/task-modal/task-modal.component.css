@@ -1,0 +1,70 @@
+/* input, select {
+  margin-top: 4px !important;;
+  margin-left: 12px !important;;
+}
+
+.modal label {
+  margin-left: 12px;
+} */
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+	background-color: blue !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+	background-color:blue!important;  
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+	border-color:blue!important; 
+}
+
+
+/* .modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+
+.cdk-overlay-pane {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+::ng-deep .cdk-overlay-container mat-datepicker-content{
+  z-index:2000 !important;
+} */
+
+
+/* .timepicker-overlay {
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 10000000 !important;
+} */
+
+/* .datepicker-popover {
+  z-index: 99999 !important;
+} */
+
+/* ::ng-deep .cdk-overlay-container mat-datepicker-content{
+  z-index:2000 !important;
+} */
+
+::ng-deep .cdk-overlay-container {
+  z-index: 1200 !important;
+}

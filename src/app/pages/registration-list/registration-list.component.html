@@ -1,0 +1,524 @@
+<main class="content">
+    <div class="container-fluid p-0">
+
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Customers</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <!-- <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item active" aria-current="page">Customer</li>
+                            </ol> -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4 d-flex align-items-center hdng-btm">
+            <div class="col-md-12 d-lg-flex align-items-center hdng-btm">
+                <div class="col-md-6">
+                    <!-- <a class="btn btn-dark btn-lg me-3">Edit Page Layout <i class="fas fa-pen"></i></a> -->
+                    <div class="d-none d-sm-inline-block">
+                        <div class="input-group input-group-navbar">
+                            <input type="text" class="form-control" placeholder="Keyword Search" aria-label="Search"
+                                (keyup)="globalSearch($event)">
+                            <button class="btn" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-search align-middle">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end mt-n1">
+                    <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                        <!-- <li class="list-inline-item">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                                <button id="switchFrst" onclick="toggleBtnSales()" type="button"
+                                    class="btn btn-outline-darker btn-lg">Sales <i
+                                        class="fas fa-cart-arrow-down"></i></button>
+                                <button id="switchScnd" onclick="toggleBtnExternal()" type="button"
+                                    class="btn btn-outline-darker btn-lg switchActiveScnd">External <i
+                                        class="fas fa-external-link-alt"></i></button>
+                            </div>
+                        </li> -->
+                        <li class="list-inline-item">
+                            <!-- <button class="btn btn-info btn-lg">Sync <i class="fas fa-sync-alt"></i></button> -->
+                        </li>
+                        <li class="list-inline-item">
+                            <button class="btn btn-primary btn-lg" data-bs-target="#addContactModal"
+                                data-bs-toggle="modal" data-bs-dismiss="modal" (click)="addNew()"
+                                *ngIf="permissionData.addPem == 1">Add New <i class="fas fa-plus"></i></button>
+                        </li>
+                        <li class="list-inline-item">
+                            <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                                <button id="switchList" type="button"
+                                    class="btn btn-outline-dark btn-xs switchActiveList" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="List View" (click)="listView()">
+                                    <img src="assets/images/list-view.svg" alt="list-view">
+                                </button>
+                                <button id="switchGrid" type="button" class="btn btn-outline-dark btn-xs"
+                                    (click)="KanbanView()">
+                                    <img src="assets/images/grid-view.svg" alt="list-view" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="Kanban View">
+                                </button>
+                            </div>
+                        </li>
+                        <!-- <li class="list-inline-item icon-border me-0">
+                            <a class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="More"></a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item">Edit this contact</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change contact image</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change record owner</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Change to lead</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Export details</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Add new task for this contact</a>
+                            </div>
+                        </li> -->
+
+                        <!-- <li class="list-inline-item icon-border me-0">
+                            <a class="d-inline-block align-middle" mat-button [matMenuTriggerFor]="menu">
+                                <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Edit this customer</button>
+                                <button mat-menu-item>Change customer image</button>
+                                <button mat-menu-item>Delete organization</button>
+                                <button mat-menu-item>Change record owner</button>
+                                <button mat-menu-item>Change to lead</button>
+                                <button mat-menu-item>Export details</button>
+                                <button mat-menu-item>Add new task for this customer</button>
+                            </mat-menu>
+                        </li> -->
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>Customers List</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length1">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button type="button" class="btn btn-md bg-white px-4"
+                                    (click)="downloadData(2)">CSV</button>
+                                <button type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4" (click)="downloadData(1)">Excel</button>
+                                <button type="button" class="btn bg-white px-4">Upload Data</button>
+                                <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false" *ngIf="!kanbanViewFlag">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More"></button>
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+
+                                    <ng-container *ngFor="let th of tableHeader ; let i=index">
+                                        <a class="dropdown-item d-md-flex align-items-center" href="javascript:void(0)">
+                                            <span class="col-auto d-block">{{th.title}}</span>
+                                            <div class="form-check form-switch col-auto d-block ms-auto">
+                                                <input class="form-check-input" type="checkbox" id="switch1"
+                                                    [checked]="th.isView" (click)="changeTableView($event, i)">
+                                            </div>
+                                        </a>
+                                        <ng-container *ngIf="i < tableHeader.length-1">
+                                            <div class="dropdown-divider"></div>
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <!--                                     
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Relationship Type</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Contact type</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Status</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Organization</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Title</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch10">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Invoice</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch11">
+                                        </div>
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" *ngIf="!kanbanViewFlag">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 109%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <ng-container *ngFor="let th of tableHeader">
+                                            <th class=" align-middle" *ngIf="th.isView">{{th.title}}
+                                            </th>
+                                        </ng-container>
+
+
+                                        <!-- <th width="40px">Seq. No.</th>
+                                        <th class="sorting align-middle">Name</th>
+                                        <th class="sorting align-middle">Customer Type</th>
+                                        <th class="sorting align-middle">ERP Code</th>
+                                        <th class="sorting align-middle">Phone</th>
+                                        <th class="sorting align-middle">Business Name</th>
+                                        <th class="sorting align-middle">Visit Date</th> -->
+                                        <th width="70px" class="align-middle">Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <!-- <th class="align-middle"><input type="checkbox" id="customCheck1"></th> -->
+
+                                        <th></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="nameSearch($event)"></th>
+                                        <th class="align-middle"><select class="form-select"
+                                                (change)="customerTypeSearch($event)">
+                                                <option [value]="0">All</option>
+                                                <option *ngFor="let item of customerTypeList"
+                                                    [value]="item.contactTypeId">{{item.contactTypeName}}</option>
+                                            </select>
+                                        </th>
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="partyCode($event)"></th>
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="phoneSearch($event)"></th>
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="businessName($event)"></th>
+
+
+                                        <!-- <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="visitDate($event)"></th> 
+                                        <th>&nbsp;</th> -->
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+
+                                    <tr role="row" class="" *ngFor="let item of customerList;let i = index;"
+                                        [ngClass]="(i+1) % 2 != 0 ? 'odd':'even'">
+
+                                        <ng-container *ngFor="let th of tableHeader; let t = index">
+                                            <td class="align-middle" *ngIf="th.title === 'Seq. No.' && th.isView">{{i+1
+                                                +
+                                                offset}}</td>
+                                            <td class="align-middle" *ngIf="th.title === 'Name' && th.isView">
+                                                <a (click)="routeDetailsPage(item.customerId)">
+                                                    {{item.customerName}}
+                                                </a>
+                                            </td>
+                                            <td class="align-middle" *ngIf="th.title === 'Customer Type' && th.isView">
+                                                {{item.contactTypeName}}</td>
+                                            <td class="align-middle" *ngIf="th.title === 'ERP Code' && th.isView">
+                                                {{item.ERPCode}}</td>
+                                            <td class="align-middle" *ngIf="th.title === 'Phone' && th.isView">
+                                                {{item.phoneNumber}}</td>
+                                            <td class="align-middle" *ngIf="th.title === 'Business Name' && th.isView">
+                                                {{item.custBusinessName}}</td>
+                                            <td class="align-middle text-danger"
+                                                *ngIf="th.title === 'Visit Date' && th.isView">
+                                                {{item.visitDate | date:'dd-MM-yyyy'}}</td>
+                                        </ng-container>
+
+
+
+
+
+
+
+
+
+                                        <!-- <td class="align-middle">{{i+1 + offset}}</td>
+                                        <td class="align-middle"><a
+                                                (click)="routeDetailsPage(item.customerId)">{{item.customerName}}
+                                            </a></td>
+                                        <td class="align-middle">{{item.contactTypeName}}</td>
+                                        <td class="align-middle">{{item.ERPCode}}</td>
+                                        <td class="align-middle">{{item.phoneNumber}}</td>
+                                        <td class="align-middle">{{item.custBusinessName}}</td>
+                                        <td class="align-middle">{{item.visitDate | date:'dd-MM-yyyy'}}</td> -->
+
+                                        <td width="70px" class="align-middle">
+
+                                            <a class="d-inline-block align-middle" (click)="edit(item)"
+                                                *ngIf="permissionData.editPem == 1">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+
+                                            <a class="d-inline-block align-middle" (click)="remove(item.customerId)"
+                                                *ngIf="permissionData.deletePem == 1">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+
+                                            <a class="d-inline-block align-middle" mat-button [matMenuTriggerFor]="menu"
+                                                *ngIf="permissionData.deletePem == 1">
+                                                <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item (click)="edit(item)">Edit this customer
+                                                </button> 
+                                                <button mat-menu-item (click)="routeDetailsPage(item.customerId)">Change customer image</button>
+                                                <!-- <button mat-menu-item (click)="routeDetailsPage(item.customerId)">Change record owner</button> -->
+                                                <!-- <button mat-menu-item (click)="routeDetailsPage(item.customerId)">Add new task for this customer</button> -->
+                                            </mat-menu>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- ------------------ Boxview-------- -->
+
+                        <div class="grid_viw_dv" *ngIf="kanbanViewFlag">
+                            <div class="grid_viw_dv_inr bg-white shadow-lg p-3 rounded-3"
+                                *ngFor="let data of customerList">
+                                <div class="col-auto grid_viw_mor_opn">
+                                    <a class="d-inline-block align-middle" mat-button [matMenuTriggerFor]="menu">
+                                        <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="edit(data)">Edit this customer
+                                        </button>
+                                        <button mat-menu-item (click)="routeDetailsPage(data.customerId)">Change customer image</button>
+                                        <!-- <button mat-menu-item>Change record owner</button>
+                                        <button mat-menu-item>Add new task for this customer</button> -->
+                                    </mat-menu>
+
+                                </div>
+                                <span
+                                    *ngIf="data.customerName != '' && data.customerName != null">{{data.customerName}}</span>
+                                <span *ngIf="data.customerName == null || data.customerName == ''">----</span>
+                                <strong
+                                    *ngIf="data.contactTypeName != null && data.contactTypeName !=''">{{data.contactTypeName}}</strong>
+                                <strong *ngIf="data.contactTypeName == null || data.contactTypeName == ''">----</strong>
+
+                                <p *ngIf="data.phoneNumber != null && data.phoneNumber !=''"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                    </svg> {{data.phoneNumber}}</p>
+
+                                <p *ngIf="data.phoneNumber == null || data.phoneNumber == ''"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                    </svg> ----</p>
+                                <span
+                                    *ngIf="data.custBusinessName != '' && data.custBusinessName != null">{{data.custBusinessName}}</span>
+                                <span *ngIf="data.custBusinessName == null || data.custBusinessName == ''">----</span>
+
+                                <span *ngIf="data.visitDate != '' && data.visitDate != null">{{data.visitDate |
+                                    date:'dd-MM-yyyy'}}</span>
+                                <span *ngIf="data.visitDate == null || data.visitDate == ''">----</span>
+                            </div>
+                        </div>
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<!--Container Main end-->
+
+<ng-template #deletemodal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-sm-10">
+                        <h4 class="modal-title d-inline-block align-middle me-2">Are you want to sure delete customer
+                        </h4>
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-end">
+                        <button type="button" (click)="closeModal()" class="btn-close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-secondary btn-lg me-2" (click)="closeModal()">No</button>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-danger btn-lg me-2" (click)="delete()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #downloadFile>
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-sm-10">
+                        <h4 class="modal-title d-inline-block align-middle me-2" style="font-size: smaller;">Are you
+                            want to sure download file
+                        </h4>
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-end">
+                        <button type="button" (click)="closeModal()" class="btn-close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-secondary btn-lg me-2" (click)="closeModal()">No</button>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-danger btn-lg me-2" (click)="fileDownload()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

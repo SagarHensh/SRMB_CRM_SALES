@@ -1,0 +1,382 @@
+<main class="content">
+    <div class="container-fluid p-0">
+
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Customers</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item active" aria-current="page">Customers List</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4 d-flex align-items-center hdng-btm">
+
+            <div class="col-md-5">
+                <div class="d-none d-sm-inline-block">
+                    <div class="input-group input-group-navbar">
+                        <input type="text" class="form-control" placeholder="Keyword Search" aria-label="Search">
+                        <button class="btn" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-search align-middle">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-7 text-end mt-n1">
+                <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                    <li class="list-inline-item">
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                            <button id="switchFrst" onclick="toggleBtnSales()" type="button"
+                                class="btn btn-outline-darker btn-lg" disabled>Sales <i
+                                    class="fas fa-cart-arrow-down"></i></button>
+                            <button id="switchScnd" onclick="toggleBtnExternal()" type="button"
+                                class="btn btn-outline-darker btn-lg switchActiveScnd" disabled>External <i
+                                    class="fas fa-external-link-alt"></i></button>
+                        </div>
+                    </li>
+                    <li class="list-inline-item">
+                        <button disabled class="btn btn-info btn-lg" disabled>Sync <i
+                                class="fas fa-sync-alt"></i></button>
+                    </li>
+                    <li class="list-inline-item">
+                        <button class="btn btn-primary btn-lg" data-bs-target="#addContactModal" data-bs-toggle="modal"
+                            data-bs-dismiss="modal" (click)="addNew()">Add New <i class="fas fa-plus"></i></button>
+                    </li>
+                    <li class="list-inline-item">
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                            <button disabled id="switchList" type="button"
+                                class="btn btn-outline-dark btn-xs switchActiveList" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" title="List View">
+                                <img src="assets/images/list-view.svg" alt="list-view">
+                            </button>
+                            <button disabled id="switchGrid" type="button" class="btn btn-outline-dark btn-xs">
+                                <img src="assets/images/grid-view.svg" alt="list-view" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="Kanban View">
+                            </button>
+                        </div>
+                    </li>
+                    <li class="list-inline-item icon-border me-0">
+                        <button disabled
+                            class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" title="More"></button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item">Edit this user</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Change user image</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Change record owner</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Change to lead</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Export details</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">Add new task for this contact</a>
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
+
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>Pending Customers List</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length1">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button disabled type="button" class="btn btn-md bg-white px-4">CSV</button>
+                                <button disabled type="button" class="btn bg-white px-4">PDF</button>
+                                <button disabled type="button" class="btn bg-white px-4">Excel</button>
+                                <button disabled type="button" class="btn bg-white px-4">Upload Data</button>
+                                <button disabled type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More"></button>
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Relationship Type</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Contact type</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Status</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Organization</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Title</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch10">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center">
+                                        <span class="col-auto d-block">Invoice</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch11">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <th width="40px">Seq. No.</th>
+                                        <th class="sorting align-middle">Name</th>
+                                        <th class="sorting align-middle">Customer Type</th>
+                                        <th class="sorting align-middle">Phone</th>
+                                        <th class="sorting align-middle">Business Name</th>
+                                        <th class="sorting align-middle">Party Code</th>
+                                        <th class="sorting align-middle">Visit Date</th>
+                                        <th width="70px" class="sorting align-middle">Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <!-- <th class="align-middle"><input type="checkbox" id="customCheck1"></th> -->
+
+                                        <th></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="nameSearch($event)"></th>
+                                        <th class="align-middle"><select class="form-select"
+                                                (change)="customerTypeSearch($event)">
+                                                <option value= "0">All</option>
+                                                <option *ngFor="let item of customerTypeList"
+                                                    [value]="item.contactTypeName">{{item.contactTypeName}}</option>
+                                            </select>
+                                        </th>
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="phoneSearch($event)"></th>
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="businessName($event)"></th>
+                                                <th></th>
+
+                                        <!-- <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="partyCode($event)"></th> -->
+
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm" (keyup)="visitDate($event)"></th> 
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+
+                                    <tr role="row" class="" *ngFor="let item of customerList;let i = index;"
+                                        [ngClass]="(i+1) % 2 != 0 ? 'odd':'even'">
+                                        <td class="align-middle">{{i+1}}</td>
+                                        <td class="align-middle"><a
+                                                (click)="routeDetailsPage(item.customerId)">{{item.customerName}}
+                                            </a></td>
+                                        <td class="align-middle">{{item.contactTypeName}}</td>
+                                        <td class="align-middle">{{item.phoneNumber}}</td>
+                                        <td class="align-middle">{{item.custBusinessName}}</td>
+                                        <td class="align-middle">{{item.partyCode}}</td>
+                                        <td class="align-middle">{{item.visitDate | date:'dd-MM-yyyy'}}</td>
+
+                                        <td width="70px" class="align-middle">
+
+                                            <a class="d-inline-block align-middle btn-sm btn-primary" (click)="approveModalFunc(item.customerId)">Approve</a>
+
+
+                                            <!-- <a class="d-inline-block align-middle" (click)="edit(item)">
+                                                <img src="assets/images/create.svg" alt="create"></a> -->
+
+                                            <!-- <a class="d-inline-block align-middle" (click)="remove(item.customerId)">
+                                                <img src="assets/images/trash.svg" alt="trash"></a> -->
+
+                                            <!--<a class="d-inline-block align-middle"
+                                             mat-button [matMenuTriggerFor]="menu">
+                                                <img src="assets/images/menu-vertical.svg" alt="trash"></a>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item>Edit this contact</button>
+                                                <button mat-menu-item>Change contact image</button>
+                                                <button mat-menu-item>Change record owner</button>
+                                                <button mat-menu-item>Change to lead</button>
+                                                <button mat-menu-item>Export details</button>
+                                                <button mat-menu-item>Add new task for this contact</button>
+                                            </mat-menu>-->
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<ng-template #approveModalDesign>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Approve Remark</h3>
+            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn-close" (click)="closeModal()"
+                style="right: -3px !important;"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">
+                                <span class="text-danger">*</span>Approve Remark
+                            </label>
+                            <div class="input-group">
+                                <textarea [(ngModel)]="approveText" class="form-control" id="description"
+                                    rows="7"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-start">
+                                <a class="btn btn-success btn-lg" (click)="sendApprove()">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

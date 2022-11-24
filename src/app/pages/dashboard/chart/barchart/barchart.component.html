@@ -1,0 +1,32 @@
+<div class="bg-white shadow-lg py-3 px-3 rounded-3 dashboard_body_box">
+
+    <div class="dashboard_body d-flex align-items-center mb-2">
+        <div class="col-auto d-block"><h3>{{title}}</h3></div>
+        <div class="col-auto d-block ms-auto">
+            <a class="dropdown-toggle no-dropdown-arrow" [matMenuTriggerFor]="OpportunityMenu" *ngIf="isChartFilter">
+                <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical">
+            </a>
+            <mat-menu #OpportunityMenu="matMenu" xPosition="before">
+                <div *ngFor="let obj of filterList;">
+                    <a mat-menu-item class="dropdown-item"
+                       (click)="onCallTypeChange(obj.id)">{{obj.name}}</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="dashboard_body col-auto d-block mb-4" *ngIf="totalAmount > 0">
+        <h2>{{totalAmount.toLocaleString()}}</h2>
+        <h4>{{subtitle}}</h4>
+    </div>
+    <div class="dashboard_body col-auto d-block mb-4" *ngIf="totalAmount == 0">
+        <h2>&nbsp;</h2>
+        <h4>&nbsp;</h4>
+    </div>
+
+    <div class="card chart-container">
+        <canvas baseChart [plugins]="barChartPlugins" [type]="'bar'" [data]="barChartData"
+                [labels]="barChartLabels" [legend]="barChartLegend" [options]="barChartOptions3">
+        </canvas>
+    </div>
+</div>

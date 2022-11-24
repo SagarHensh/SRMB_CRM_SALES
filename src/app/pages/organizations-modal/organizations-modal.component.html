@@ -1,0 +1,780 @@
+<!---add new popup start--->
+<!-- <div class="modal"> -->
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-10">
+                    <h3 class="modal-title d-inline-block align-middle me-2" *ngIf="!modalStatusFlag">Create New
+                        Organization</h3>
+                    <h3 class="modal-title d-inline-block align-middle me-2" *ngIf="modalStatusFlag">Update New
+                        Organization</h3>
+                    <div class="d-inline-block align-middle">
+                        <a class="btn btn-link">Edit Page Layout</a>
+                    </div>
+                </div>
+                <div class="col-sm-2 d-flex justify-content-end"><button type="button" (click)="modalClose()"
+                        aria-label="Close" class="btn-close"></button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-xs-3 border-end border-dark py-5 pe-4">
+                    <div class="contactLftList" id="simple-bar-left">
+                        <ol class="list-group list-group-numbered">
+                            <li id="step_0" class="active">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_book.svg" alt="popup_book">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Business Contact Details</h5>
+                            </li>
+                            <li id="step_1">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_directions.svg" alt="popup_directions">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Personal Contact Details</h5>
+                            </li>
+
+                            <li id="step_2">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_coins.svg" alt="popup_coins">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Business Address Details</h5>
+                            </li>
+                            <li id="step_3">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_clipboard.svg" alt="popup_clipboard">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Description</h5>
+                            </li>
+                            <li id="step_4">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_reverse-alt.svg" alt="popup_reverse">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Current &amp; Competitor</h5>
+                            </li>
+                            <li id="step_5">
+                                <figure class="d-inline-block align-middle">
+                                    <img src="assets/images/popup_eye-no.svg" alt="popup_eye">
+                                </figure>
+                                <h5 class="d-inline-block align-middle">Permissions</h5>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-8 py-5 ps-5">
+                    <div>
+                        <!--personal details-->
+                        <div id="stepDtl_0" class="contactRgtForm">
+                            <h3>Business Contact Details</h3>
+                            <div class="popupForm">
+                                <!-- <form action="#" target="_blank"> -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="organization_firstname" class="form-label"><span
+                                                class="text-danger">*</span>Organization Name</label>
+                                        <div class="input-group">
+                                            <input type="text" name="OrganizationName" class="form-control"
+                                                id="organization_firstname" [(ngModel)]="orgName">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <label for="popup_phone" class="form-label"><span
+                                                class="text-danger">*</span>Phone
+                                            Number</label>
+                                        <div class="input-group" *ngFor="let obj of orgPhone; let i = index;">
+                                            <input type="text" name="phone" class="form-control" [(ngModel)]="obj.item"
+                                                onkeypress="if(this.value.length >9) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                                            <button class="btn btn-outline-danger input-group-height"
+                                                *ngIf="orgPhone.length > 1" (click)="removeOrgPhone(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div></div>
+                                        <a class="btn btn-link p-0 add_field mb-2" *ngIf="orgPhone.length < 2"
+                                            (click)="addOrgPhone()">+
+                                            Add</a>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="popup_email" class="form-label">
+                                         Email Address</label>
+                                        <div class="input-group" *ngFor="let obj of orgEmail; let i = index;">
+                                            <input type="text" name="email" class="form-control" [(ngModel)]="obj.item">
+                                            <button class="btn btn-outline-danger input-group-height"
+                                                *ngIf="orgEmail.length > 1" (click)="removeOrgEmail(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+
+                                        <div></div>
+                                        <a class="btn btn-link p-0 add_field mb-2" (click)="addOrgEmail()"
+                                            *ngIf="orgEmail.length < 2">+ Add</a>
+                                    </div>
+
+
+
+                                    <div class="col-md-12">
+                                        <label for="organization_description" class="form-label"><span
+                                                class="text-danger">*</span>Organization Description</label>
+                                        <div class="input-group">
+                                            <textarea type="text" name="OrganizationDescription" class="form-control"
+                                                id="organization_description" [(ngModel)]="orgDesc"
+                                                onkeypress="if(this.value.length > 350) return false;"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-3">
+
+                                    <div class="col-md-6">
+                                        <label for="popup_annualrevenue" class="form-label"><span
+                                                class="text-danger">*</span>Annual
+                                            Revenue</label>
+                                        <div class="input-group">
+                                            <input type="number" name="Annual revenue" class="form-control"
+                                                id="popup_annualrevenue" [(ngModel)]="revenue"
+                                                onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="popup_noemployee" class="form-label"><span
+                                                class="text-danger">*</span>Number Of
+                                            Employee</label>
+                                        <div class="input-group">
+                                            <input type="number" name="Number of employee" class="form-control"
+                                                id="popup_noemployee" [(ngModel)]="noOfEmp"
+                                                onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-12 pb-3" *ngIf="assignToFlag">
+                                        <label for="status_type" class="form-label d-block"><span
+                                                class="text-danger">*</span>Assigned To</label>
+                                        <mat-radio-group aria-label="Select an option" [(ngModel)]="assignTO">
+                                            <mat-radio-button style="padding-right: 8px" [value]="0">Users
+                                            </mat-radio-button>
+                                            <mat-radio-button style="padding-right: 8px" disabled [value]="1">Group
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+
+                                    </div> -->
+
+                                    <div class="col-md-12 pb-3">
+                                        <label for="status_type" class="form-label d-block"><span
+                                                class="text-danger">*</span>Assigned To</label>
+                                        <mat-radio-group aria-label="Select an option" [(ngModel)]="assignTO">
+                                            <mat-radio-button style="padding-right: 8px" [value]="0">Users
+                                            </mat-radio-button>
+                                            <mat-radio-button style="padding-right: 8px" disabled [value]="1">Group
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+
+                                    </div>
+
+
+                                    <!-- <div class="col-md-12" *ngIf="assignToFlag">
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="status_type" [(ngModel)]="assignToId">
+                                                <option value="">Select user</option>
+                                                <option *ngFor="let item of userList" [value]="item.userId">
+                                                    {{item.firstName}} {{item.lastName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="status_type" [(ngModel)]="assignToId">
+                                                <option value="">Select user</option>
+                                                <!-- <option *ngFor="let item of userList" [ngValue]="item.userId"> -->
+                                                <option *ngFor="let item of userList" [value]="item.userId">
+                                                    {{item.firstName}} {{item.lastName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-warning btn-lg me-2" type="button"
+                                            data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                class="fas fa-times-circle"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" (click)="saveNext()">Save
+                                            &amp; Next <i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                        <!--address details-->
+                        <div id="stepDtl_1" class="contactRgtForm hide">
+                            <h3>Personal Contact Details</h3>
+                            <div class="popupForm">
+                                <!-- <form action="#" target="_blank"> -->
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="contact_type" class="form-label"><span
+                                                class="text-danger">*</span>Contact
+                                            Type</label>
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="contact_type" [(ngModel)]="contactType">
+                                                <option value="">Select an option</option>
+                                                <option *ngFor="let item of contactTypeList"
+                                                    [value]="item.contactTypeId">
+                                                    {{item.contactTypeName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- -------------------------Lead------------------------>
+
+                                <!-- <div class="col-md-12" *ngIf="leadFlag">
+                                    <label for="status_type" class="form-label"><span class="text-danger">*</span>Lead
+                                        Status</label>
+                                    <div class="input-group">
+                                        <select class="form-select" aria-label="Default select example" id="status_type"
+                                            [(ngModel)]="leadStatus">
+                                            <option value="">Select an option</option>
+                                            <option value="0">Not Contacted</option>
+                                            <option value="1">Attempted Contact</option>
+                                            <option value="2">Contacted</option>
+                                            <option value="3">Converted</option>
+
+                                        </select>
+                                    </div>
+                                    <label for="status_type" class="form-label"><span class="text-danger">*</span>Lead
+                                        Source Type</label>
+                                    <div class="input-group">
+                                        <select class="form-select" aria-label="Default select example" id="status_type"
+                                            [(ngModel)]="leadType" (change)="selectedLeadType()">
+                                            <option value="">Select an option</option>
+                                            <option *ngFor="let item of leadTypeList" [value]="item.id">
+                                                {{item.name}}</option>
+
+                                        </select>
+                                    </div>
+                                    <label for="status_type" class="form-label"><span class="text-danger">*</span>Lead
+                                        Source</label>
+                                    <div class="input-group">
+                                        <select class="form-select" aria-label="Default select example" id="status_type"
+                                            [(ngModel)]="leadSource">
+                                            <option value="">Select an option</option>
+                                            <option *ngFor="let item of leadSourceTypeName" [value]="item.leadSourceId">
+                                                {{item.leadSourceName}}</option>
+
+                                        </select>
+                                    </div>
+
+                                </div> -->
+
+                                <!-- ----------------------Lead End--------------- -->
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="popup_firstname" class="form-label"><span
+                                                class="text-danger">*</span>First
+                                            Name</label>
+                                        <div class="input-group">
+                                            <!-- <span class="input-group-addon">
+                                                <select name="sal" class="form-select">
+                                                    <option selected="selected" value="Mr.">Mr.</option>
+                                                    <option value="Mrs.">Mrs.</option>
+                                                    <option value="Miss">Miss</option>
+                                                </select>
+                                            </span> -->
+                                            <input type="text" name="firstName" [(ngModel)]="fName" class="form-control"
+                                                id="popup_firstname">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="popup_lastname" class="form-label"><span
+                                                class="text-danger">*</span>Last
+                                            Name</label>
+                                        <div class="input-group">
+                                            <input type="text" name="lastName" [(ngModel)]="lName" class="form-control"
+                                                id="popup_lastname">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="popup_phone" class="form-label"><span
+                                                class="text-danger">*</span>Phone
+                                            Number</label>
+                                        <div class="input-group" *ngFor="let obj of phone;let i = index;">
+                                            <input type="number" name="phone" class="form-control" id="popup_phone"
+                                                [(ngModel)]="obj.item"
+                                                onkeypress="if(this.value.length >9) return false; if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.keyCode != 9)  return false;">
+                                            <button class="btn btn-outline-danger input-group-height"
+                                                *ngIf="phone.length > 1" (click)="removePhone(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div></div>
+                                        <a class="btn btn-link p-0 add_field mb-2" (click)="addPhone()"
+                                            *ngIf="phone.length < 2">+
+                                            Add</a>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="popup_email" class="form-label">
+                                            <span
+                                                class="text-danger">*</span>Email
+                                            Address</label>
+                                        <div class="input-group" *ngFor="let obj of email;let i = index;">
+                                            <input type="text" name="email" class="form-control" id="popup_email"
+                                                [(ngModel)]="obj.item">
+                                            <button class="btn btn-outline-danger input-group-height"
+                                                *ngIf="email.length > 1" (click)="removeEmail(i)">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div></div>
+                                        <a class="btn btn-link p-0 add_field mb-2" (click)="addEmail()"
+                                            *ngIf="email.length < 2">+
+                                            Add</a>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <label for="address_popup" class="form-label"><span
+                                                    class="text-danger">*</span>Address</label>
+                                            <div class="input-group">
+                                                <textarea name="Address" class="form-control" id="address_popup"
+                                                    rows="7" [(ngModel)]="address"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="contact_type" class="form-label"><span
+                                                    class="text-danger">*</span>Country
+                                            </label>
+                                            <div class="input-group">
+                                                <select class="form-select" (change)="getStatesByselectCountry()"
+                                                    aria-label="Default select example" id="contact_type"
+                                                    [(ngModel)]="country">
+                                                    <option value="">Select Country</option>
+                                                    <option *ngFor="let item of countryList" [ngValue]="item.countryId">
+                                                        {{item.countryName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="contact_type" class="form-label"><span
+                                                    class="text-danger">*</span>State
+                                            </label>
+                                            <div class="input-group">
+                                                <select class="form-select" (change)="getCityByselectState()"
+                                                    aria-label="Default select example" id="contact_type"
+                                                    [(ngModel)]="state">
+                                                    <option value="">Select State</option>
+                                                    <option *ngFor="let item of stateList" [ngValue]="item.stateId">
+                                                        {{item.stateName}}</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="popup_city" class="form-label"><span
+                                                    class="text-danger">*</span>District/City</label>
+                                            <div class="input-group">
+                                                <select class="form-select" (change)="getZoneselectCity()"
+                                                    aria-label="Default select example" id="contact_type"
+                                                    [(ngModel)]="district">
+                                                    <option value="">Select City</option>
+                                                    <option *ngFor="let item of cityList" [ngValue]="item.cityId">
+                                                        {{item.cityName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="popup_zone" class="form-label"><span
+                                                    class="text-danger">*</span>Zone</label>
+                                            <div class="input-group">
+                                                <select class="form-select" aria-label="Default select example"
+                                                    id="contact_type" [(ngModel)]="zone">
+                                                    <option value="">Select Zone</option>
+                                                    <option *ngFor="let item of zoneList" [ngValue]="item.zoneId">
+                                                        {{item.zoneName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="popup_geolocation" class="form-label"><span
+                                                    class="text-danger">*</span>Geo
+                                                Location</label>
+                                            <div class="input-group">
+                                                <input type="text" [(ngModel)]="geoLocation" class="form-control"
+                                                    id="popup_geolocation">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <label for="popup_latitude" class="form-label"><span
+                                                    class="text-danger">*</span>Latitude</label>
+                                            <div class="input-group">
+                                                <input type="number" [(ngModel)]="latitude" class="form-control"
+                                                    id="popup_latitude"
+                                                    onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.which !=46) if(event.keyCode != 9)  return false;">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="popup_longitude" class="form-label"><span
+                                                    class="text-danger">*</span>Longitude</label>
+                                            <div class="input-group">
+                                                <input type="number" [(ngModel)]="longitude" class="form-control"
+                                                    id="popup_longitude"
+                                                    onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.which !=46) if(event.keyCode != 9)  return false;">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="col-md-12 mt-3">
+                                        <a class="btn btn-xs btn-primary mb-3">+ Add Another</a>
+                                    </div> -->
+                                </div>
+
+
+                                <div class="row mt-5">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-dark btn-lg me-2" type="button"
+                                            (click)="saveprev()">Prev. Step <i
+                                                class="fas fa-chevron-circle-left"></i></button>
+                                        <button class="btn btn-warning btn-lg me-2" type="button"
+                                            data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                class="fas fa-times-circle"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" (click)="saveNext()">Save
+                                            &amp; Next <i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- </form> -->
+                            </div>
+                        </div>
+
+                        <!--buisness details-->
+                        <div id="stepDtl_2" class="contactRgtForm hide">
+                            <h3>Business Address Details</h3>
+                            <div class="popupForm">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label for="address_popup" class="form-label"><span
+                                                class="text-danger">*</span>Address</label>
+                                        <div class="input-group">
+                                            <textarea name="Address" class="form-control" id="address_popup" rows="7"
+                                                [(ngModel)]="orgAddress"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="contact_type" class="form-label"><span
+                                                class="text-danger">*</span>Country
+                                        </label>
+                                        <div class="input-group">
+                                            <select class="form-select" (change)="getOrgStatesByselectCountry()"
+                                                aria-label="Default select example" id="contact_type"
+                                                [(ngModel)]="orgCountry">
+                                                <option value="">Select Country</option>
+                                                <option *ngFor="let item of countryList" [ngValue]="item.countryId">
+                                                    {{item.countryName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="contact_type" class="form-label"><span
+                                                class="text-danger">*</span>State
+                                        </label>
+                                        <div class="input-group">
+                                            <select class="form-select" (change)="getOrgCityByselectState()"
+                                                aria-label="Default select example" id="contact_type"
+                                                [(ngModel)]="orgState">
+                                                <option value="">Select State</option>
+                                                <option *ngFor="let item of orgStateList" [ngValue]="item.stateId">
+                                                    {{item.stateName}}</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="popup_city" class="form-label"><span
+                                                class="text-danger">*</span>District/City</label>
+                                        <div class="input-group">
+                                            <select class="form-select" (change)="getOrgZoneselectCity()"
+                                                aria-label="Default select example" id="contact_type"
+                                                [(ngModel)]="orgCity">
+                                                <option value="">Select City</option>
+                                                <option *ngFor="let item of orgCityList" [ngValue]="item.cityId">
+                                                    {{item.cityName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="popup_zone" class="form-label"><span
+                                                class="text-danger">*</span>Zone</label>
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="contact_type" [(ngModel)]="orgZone">
+                                                <option value="">Select Zone</option>
+                                                <option *ngFor="let item of orgZoneList" [ngValue]="item.zoneId">
+                                                    {{item.zoneName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="popup_geolocation" class="form-label"><span
+                                                class="text-danger">*</span>Geo
+                                            Location</label>
+                                        <div class="input-group">
+                                            <input type="text" [(ngModel)]="orgGeoLoc" class="form-control"
+                                                id="popup_geolocation">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="popup_latitude" class="form-label"><span
+                                                class="text-danger">*</span>Latitude</label>
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="orgLatitude" class="form-control"
+                                                id="popup_latitude"
+                                                onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.which !=46) if(event.keyCode != 9)  return false;">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="popup_longitude" class="form-label"><span
+                                                class="text-danger">*</span>Longitude</label>
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="orgLongitude" class="form-control"
+                                                id="popup_longitude"
+                                                onkeypress="if(event.which < 48 || event.which > 57 ) if(event.which != 8) if(event.which !=46) if(event.keyCode != 9)  return false;">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-dark btn-lg me-2" type="button"
+                                            (click)="saveprev()">Prev.
+                                            Step <i class="fas fa-chevron-circle-left"></i></button>
+                                        <button class="btn btn-warning btn-lg me-2" type="button"
+                                            data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                class="fas fa-times-circle"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" (click)="saveNext()">Save
+                                            &amp; Next <i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--Description details-->
+                        <div id="stepDtl_3" class="contactRgtForm hide">
+                            <h3>Add Description</h3>
+                            <div class="popupForm">
+                                <!-- <form action="#" target="_blank"> -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="address_popup" class="form-label col-auto d-block"><span
+                                                class="text-danger">*</span>Description</label>
+                                        <textarea name="Address" class="form-control" id="address_popup" rows="7"
+                                            style="height:200px" [(ngModel)]="description"
+                                            onkeypress="if(this.value.length > 500) return false;"></textarea>
+                                    </div>
+                                    <!-- <div class="col-md-12 mt-3">
+                                        <a class="btn btn-xs btn-primary mb-3">+ Add Another</a>
+                                    </div> -->
+                                </div>
+
+
+                                <div class="row mt-5">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-dark btn-lg me-2" type="button"
+                                            (click)="saveprev()">Prev. Step <i
+                                                class="fas fa-chevron-circle-left"></i></button>
+                                        <button class="btn btn-warning btn-lg me-2" type="button"
+                                            data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                class="fas fa-times-circle"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" (click)="saveNext()">Save
+                                            &amp; Next <i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- </form> -->
+                            </div>
+                        </div>
+
+                        <!--Current &amp; Competitor details-->
+                        <div id="stepDtl_4" class="contactRgtForm hide">
+                            <h3>Current &amp; Competitor</h3>
+                            <div class="popupForm">
+                                <!-- <form action="#" target="_blank"> -->
+
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <div *ngFor="let obj of productDetails; let i = index">
+                                            <label for="product_name" class="form-label"><span
+                                                    class="text-danger">*</span>Product
+                                                Name</label>
+                                            <div class="input-group">
+                                                <select class="form-select" aria-label="Default select example"
+                                                    name="Product Name" id="product_name" [(ngModel)]="obj.productId">
+                                                    <option value="">Select an option</option>
+                                                    <option *ngFor="let item of productList" [ngValue]="item.productId">
+                                                        {{item.productName}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label for="product_name" class="form-label"><span
+                                                        class="text-danger">*</span>Product
+                                                    Description</label>
+                                                <div class="input-group">
+                                                    <textarea name="Address" class="form-control" id="description"
+                                                        placeholde="Description" [(ngModel)]="obj.productDescription"
+                                                        onkeypress="if(this.value.length > 500) return false;"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- </div> -->
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="status_type" class="form-label d-block"><span
+                                                            class="text-danger">*</span>Currently
+                                                        Using</label>
+                                                    <mat-radio-group aria-label="Select an option"
+                                                        [(ngModel)]="obj.competitorType">
+                                                        <mat-radio-button style="padding-right: 8px" value="0">Currently
+                                                            using</mat-radio-button>
+                                                        <mat-radio-button value="1">Competitor</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+                                            </div><br>
+                                            <button type="button" *ngIf="productDetails.length > 1"
+                                                class="btn btn-danger" (click)="removeProduct(i)">X</button>
+                                        </div>
+
+                                        <div class="col-md-12 mt-5">
+                                            <a class="btn btn-xs btn-primary mb-3" (click)="addProduct()">+ Add
+                                                Another</a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-5">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-dark btn-lg me-2" type="button"
+                                                (click)="saveprev()">Prev.
+                                                Step <i class="fas fa-chevron-circle-left"></i></button>
+                                            <button class="btn btn-warning btn-lg me-2" type="button"
+                                                data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                    class="fas fa-times-circle"></i></button>
+                                            <button class="btn btn-success btn-lg" type="button"
+                                                (click)="saveNext()">Save
+                                                &amp; Next <i class="fas fa-chevron-circle-right"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Visibility Permissions details-->
+                        <div id="stepDtl_5" class="contactRgtForm hide">
+                            <h3>Visibility Permissions</h3>
+                            <div class="popupForm">
+                                <!-- <form action="#" target="_blank"> -->
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-left:12px;">
+
+                                        <mat-radio-group aria-label="Select an option"
+                                            [(ngModel)]="visibilityPermision" (change) = "visibilityPermisionFun()">
+                                            <mat-radio-button [value]="1">Everyone
+                                            </mat-radio-button><br><br>
+                                            <mat-radio-button [value]="2">Only the record
+                                                owner
+                                            </mat-radio-button>
+                                            <br><br>
+                                            <!-- <mat-radio-button *ngIf="assignToFlag" [value]="4"
+                                                (click)="selectIndividual()">Select
+                                                individual
+                                                people</mat-radio-button> -->
+
+                                                <mat-radio-button [value]="4">Select individual people</mat-radio-button>
+
+                                            <br><br>
+                                        </mat-radio-group>
+                                    </div>
+
+                                    <div class="col-md-12" *ngIf="visibilityPersionFlag">
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="status_type" [(ngModel)]="permissionTo">
+                                                <option value="">Select user</option>
+                                                <option *ngFor="let item of userList" [ngValue]="item.userId">
+                                                    {{item.firstName}}&nbsp;{{item.lastName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                  
+
+
+                                </div>
+
+                                <div class="row mt-5">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-dark btn-lg me-2" type="button"
+                                            (click)="saveprev()">Prev.
+                                            Step <i class="fas fa-chevron-circle-left"></i></button>
+                                        <button class="btn btn-warning btn-lg me-2" type="button"
+                                            data-bs-dismiss="modal" aria-label="Close">Save &amp; Close <i
+                                                class="fas fa-times-circle"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" *ngIf="!modalStatusFlag"
+                                            (click)="submit()">Submit
+                                            <i class="fas fa-chevron-circle-right"></i></button>
+                                        <button class="btn btn-success btn-lg" type="button" *ngIf="modalStatusFlag"
+                                            (click)="update()">Update
+                                            <i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- </form> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

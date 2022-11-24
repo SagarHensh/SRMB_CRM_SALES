@@ -1,0 +1,286 @@
+<div class="row">
+    <div class="col-lg-2 col-md-6">
+        <div class="bg-white shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+            <div class="hdr d-flex align-items-center mb-2">
+                <div class="col-auto d-block"><h3>Total Lead</h3></div>
+                <div class="col-auto d-block ms-auto">
+                    <a class="dropdown-toggle no-dropdown-arrow" [matMenuTriggerFor]="customerMenu">
+                        <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical">
+                    </a>
+                    <mat-menu #customerMenu="matMenu" xPosition="before">
+                        <div *ngFor="let obj of filterList;">
+                            <a mat-menu-item class="dropdown-item"
+                               (click)="onCallTypeChange(obj.id, 'totalLead')">{{obj.name}}</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="col-auto d-block">
+                <h2 class="text-success">{{totalLead}}</h2>
+                <h4><img class="d-inline-block align-middle me-2" src="assets/images/sucess_arrow-up-circle.svg"
+                         alt="sucess_arrow"> {{totalLeadGrowth}} Last Week</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-4 col-md-6">
+        <div class="bg-white shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+            <div class="hdr d-flex align-items-center mb-2">
+                <div class="col-auto d-block"><h3>Qualified Lead Converted to Customer</h3></div>
+                <div class="col-auto d-block ms-auto">
+                    <a class="dropdown-toggle no-dropdown-arrow" [matMenuTriggerFor]="businessMenu">
+                        <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical">
+                    </a>
+                    <mat-menu #businessMenu="matMenu" xPosition="before">
+                        <div *ngFor="let obj of filterList;">
+                            <a mat-menu-item class="dropdown-item"
+                               (click)="onCallTypeChange(obj.id, 'convToCustomer')">{{obj.name}}</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="col-auto d-block">
+                <h2 class="text-danger">{{totalLeadToCustomer}}</h2>
+                <h4><img class="d-inline-block align-middle me-2" src="assets/images/danger_arrow-down-circle.svg"
+                         alt="danger_arrow"> {{totalLeadToCustomerGrowth}} Last Week</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6">
+        <div class="bg-white shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+            <div class="hdr d-flex align-items-center mb-2">
+                <div class="col-auto d-block"><h3>Converted to Opportunity</h3></div>
+                <div class="col-auto d-block ms-auto">
+                    <a class="dropdown-toggle no-dropdown-arrow" [matMenuTriggerFor]="expensesMenu">
+                        <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical">
+                    </a>
+
+                    <mat-menu #expensesMenu="matMenu" xPosition="before">
+                        <div *ngFor="let obj of filterList;">
+                            <a mat-menu-item class="dropdown-item"
+                               (click)="onCallTypeChange(obj.id, 'convToOpportunity')">{{obj.name}}</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="col-auto d-block">
+                <h2 class="text-warning">{{totalConvertedOpportunity}}</h2>
+                <h4><img class="d-inline-block align-middle me-2" src="assets/images/warning_arrow-up-circle.svg"
+                         alt="warning_arrow"> {{totalConvertedOpportunityGrowth}} Last Week</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-6">
+        <div class="bg-white shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+            <div class="hdr d-flex align-items-center mb-2">
+                <div class="col-auto d-block"><h3>New Connected</h3></div>
+                <div class="col-auto d-block ms-auto">
+                    <a class="dropdown-toggle no-dropdown-arrow" [matMenuTriggerFor]="employeeMenu">
+                        <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical">
+                    </a>
+
+                    <mat-menu #employeeMenu="matMenu" xPosition="before">
+                        <div *ngFor="let obj of filterList;">
+                            <a mat-menu-item class="dropdown-item"
+                               (click)="onCallTypeChange(obj.id, 'newConnection')">{{obj.name}}</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="col-auto d-block">
+                <h2 class="text-success">{{totalNewConnected}}</h2>
+                <h4><img class="d-inline-block align-middle me-2" src="assets/images/sucess_arrow-up-circle.svg"
+                         alt="success_arrow"> {{totalNewConnectedGrowth}} Last Week</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-lg-4 col-sm-12  mb-3">
+        <app-doughnutchart
+                [title]="'Lead Pipeline by stage'"
+                [dataset]="leadPipelineByStageData"
+                [isLegendShow]="true"
+                (dayViewChanged)="onCallTypeChange($event, 'leadPipelineByStage')">
+        </app-doughnutchart>
+    </div>
+    <div class="col-lg-4 col-sm-12  mb-3">
+        <app-piechart
+                [title]="'Leads converted to opportunity'"
+                [dataset]="convToOpportunityBifurcationData"
+                [isLegendShow]="true"
+                (dayViewChanged)="onCallTypeChange($event, 'convToOpportunityBifurcation')">
+        </app-piechart>
+    </div>
+    <div class="col-lg-4 col-sm-12  mb-3">
+        <app-stackbarchart
+                [title]="'Growth forecast by month'"
+                [dataset]="growthForecastData"
+                [valueLabels]="growthForecastDataLabels"
+                [isLegendShow]="true"
+                (dayViewChanged)="onCallTypeChange($event, 'growthForecast')">
+        </app-stackbarchart>
+    </div>
+    <div class="col-lg-12 col-sm-12  mb-3">
+        <app-barchart
+                [title]="'Leads collected by month'"
+                [chartLabel]="'Leads Count '"
+                [dataset]="leadCollectedData"
+                [totalAmount]="leadCollectedTotal"
+                [indexAxis]="'x'"
+                [backgroundColor]="'pink'"
+                [borderColor]="'pink'"
+                [isChartFilter]="false"
+                (dayViewChanged)="onCallTypeChange($event, 'leadCollected')">
+        </app-barchart>
+    </div>
+    <div class="col-lg-12 col-sm-12  mb-3">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>My leads</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                         aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                         (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                    [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                    [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <!-- <button disabled type="button" class="btn btn-md bg-white px-4">CSV</button>
+                                <button disabled type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4">Excel</button> -->
+<!--                                <button type="button" class="btn bg-white px-4" (click)="multipleUpload()">Upload Data</button>-->
+                                <button disabled type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="display: none;">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                         data-bs-placement="bottom" title="More"></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                   style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                <tr role="row">
+                                    <th width="40px">Seq. No.</th>
+                                    <th class=" align-middle">Name</th>
+                                    <th class=" align-middle">Organization</th>
+                                    <th class=" align-middle">Title</th>
+                                    <th class=" align-middle">Phone</th>
+                                    <th class=" align-middle">Email ID</th>
+                                    <th class=" align-middle">Lead Status</th>
+                                    <th class=" align-middle">Lead Owner</th>
+<!--                                    <th class="sorting align-middle">Action</th>-->
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <!-- <th class="align-middle"><input type="checkbox" id="customCheck1"></th> -->
+                                    <th></th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm" [(ngModel)]="contactName" (keyup) = "searchByText($event)"></th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm"  [(ngModel)]="orgName" (keyup) = "searchByText($event)"></th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm"  [(ngModel)]="title" (keyup) = "searchByText($event)"></th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm"  [(ngModel)]="phone" (keyup) = "searchByText($event)"></th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm"  [(ngModel)]="email" (keyup) = "searchByText($event)"></th>
+                                    <th class="align-middle"><select class="form-select"  [(ngModel)]="leadStatus" (change)="getAllLead()">
+                                        <option value="All">All</option>
+                                        <option value="Warm">Warm</option>
+                                        <option value="Cold">Cold</option>
+                                        <option value="Hot">Hot</option>
+                                    </select>
+                                    </th>
+                                    <th class="align-middle"><input type="text" placeholder="Search"
+                                                                    class="form-control input-sm"  [(ngModel)]="owner" (keyup) = "searchByText($event)"></th>
+<!--                                    <th>&nbsp;</th>-->
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr *ngIf="allLeadArray.length == 0">
+                                    <td class="text-center" colspan="9">You have not added any Lead yet.</td>
+                                </tr>
+                                <tr role="row" *ngFor="let data of allLeadArray; let i = index;" class=""
+                                    [ngClass]="(i+1) % 2 != 0 ? 'odd' : 'even' " style="cursor: pointer ;">
+                                    <td class="align-middle">{{i+1 + offset}}</td>
+                                    <td class="align-middle">
+                                        <a>{{data.firstName}} {{data.lastName}}</a>
+                                    </td>
+                                    <td class="align-middle">{{data.organizationName}}</td>
+                                    <td class="align-middle">{{data.title}}</td>
+                                    <td class="align-middle">{{data.phone}}</td>
+                                    <td class="align-middle">{{data.email}}</td>
+                                    <td class="align-middle">
+                                        <span *ngIf="data.leadTypeStatus == '1'">Warm</span>
+                                        <span *ngIf="data.leadTypeStatus == '2'">Cold</span>
+                                        <span *ngIf="data.leadTypeStatus == '3'">Hot</span>
+                                    </td>
+                                    <td class="align-middle">{{data.LeadOwner}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-xl-flex align-items-center mt-3">
+                            <div class="col-auto d-block">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                         aria-controls="datatables-reponsive" class="form-select form-select-sm"
+                                                         (change)="changepagelimit($event)" [(ngModel)]="selectedVal">
+                                                <option *ngFor="let item of pageList" [value]=item.value>{{item.name}}
+                                                </option>
+                                            </select>
+                                            {{offset + 1}} - {{offset + limit}}
+                                        </label>
+                                        <label>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                    [disabled]="isPrevious" (click)="previous()">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></button>
+                                            <button type="button" class="px-1 d-inline-block align-middle no-bg"
+                                                    [disabled]="isdisable" (click)="next()">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></button>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

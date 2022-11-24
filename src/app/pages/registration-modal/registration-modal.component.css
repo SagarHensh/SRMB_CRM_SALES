@@ -1,0 +1,33 @@
+.btn-link{
+    text-decoration: none !important;
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+	background-color: blue !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+	background-color:blue!important;  
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+	border-color:blue!important; 
+}
+
+input[type="file"] {
+    display: none !important;
+}
+
+.form-heading{
+	display: flex;
+	justify-content: center;
+}
+/* 
+.addContactModal.modal .file-div label.input-button {
+	width: 100% !important;
+  } */
+  .ng-autocomplete {
+  width:100%;
+  max-width: 600px;
+  display: table;
+  margin: 0 auto;
+}

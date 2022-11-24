@@ -1,0 +1,1169 @@
+<!-- <div class="main"> -->
+<!--Container Main start-->
+
+<main class="content" *ngIf="expenseFlag">
+    <div class="container-fluid p-0">
+
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Expense Management</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item"><a href="#">Administration</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Expense</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-6 d-lg-flex align-items-center hdng-btm">
+                <div class="col-md-12">
+                    <ul class="mt-3 mt-lg-0 mb-0 tabstyle_nav">
+                        <li class="list-inline-item ">
+                            <a class="px-3 py-2 bg-white">Overview</a>
+                        </li>
+                        <li class="list-inline-item active">
+                            <a class="px-3 py-2 bg-white" (click) = "expense()">Expenses</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="px-3 py-2 bg-white" (click) = "expenseReport()">Reports</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="px-3 py-2 bg-white" (click)="expenseApproval()">Approval</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-end mt-n1">
+                <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                    <li class="list-inline-item">
+                        <a class="btn btn-primary btn-lg" (click) = "addExpense()">Add
+                            Expense <i class="fas fa-plus"></i></a>
+                    </li>
+                    <li class="list-inline-item icon-border me-0">
+                        <a class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" title="" data-bs-original-title="More" aria-label="More"></a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#">Edit this Expense</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Change Expense image</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Add new task for this Expense</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>Pending expenses list</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button type="button" class="btn btn-md bg-white px-4">CSV</button>
+                                <button type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4">Excel</button>
+                                <button type="button" class="btn bg-white px-4">Upload</button>
+                                <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More"></button>
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">User Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Joining Date</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Primary Product</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Designation</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Role</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Reporting</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <th width="40px">&nbsp;</th>
+                                        <th class="sorting align-middle">Name</th>
+                                        <th class="sorting align-middle">Date</th>
+                                        <th class="sorting align-middle">Category</th>
+                                        <th class="sorting align-middle">Amount Claimed</th>
+                                        <th class="sorting align-middle">Reimbursement Amount</th>
+                                        <th class="sorting align-middle">Status</th>
+                                        <th width="40px" class="sorting align-middle">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th class="align-middle"><input type="checkbox" id="customCheck1">
+                                        </th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th width="40px">&nbsp;</th>
+
+
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Telephone Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">55,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <a class="d-inline-block align-middle dropdown-toggle no-dropdown-arrow"
+                                                href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="assets/images/menu-vertical.svg" alt="trash"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="More"></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">Task name</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Due date</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Assigned to</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Contact person</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Phone number</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Priority status</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Estimate</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Task stage</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Task type</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#">Mark as completed</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Telephone Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Other</td>
+                                        <td class="align-middle">4,29,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Legal Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Legal</td>
+                                        <td class="align-middle">1,00,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Utility Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">15,00,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Legal Expenses 2</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Legal</td>
+                                        <td class="align-middle">29,00,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Bank Charges</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Tax</td>
+                                        <td class="align-middle">15,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Insurance Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Tax</td>
+                                        <td class="align-middle">95,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Advertising Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">19,86,000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Advertising Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Other</td>
+                                        <td class="align-middle">2,00,00000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2">
+                                        </td>
+                                        <td class="align-middle">Research Expenses</td>
+                                        <td class="align-middle">10.04.2022</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">15,00000</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">&nbsp;</td>
+                                        <td width="30px" class="align-middle">
+                                            <img src="assets/images/menu-vertical.svg" alt="trash">
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length">
+                                        <label>Records per page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                            <label>
+                                            </label></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+
+<div id="settings" class="settings js-settings">
+    <div onclick="settingsToggle()" class="settings-toggle">
+        <div class="settings-toggle-option settings-toggle-option-text js-settings-toggle" title="Theme Builder">
+            <div class="d-inline-block my-1"><img src="assets/images/fluent_paint-bucket.svg" alt="fluent_paint-bucket">
+            </div>
+            <div class="d-inline-block my-1"><img src="assets/images/fluent_settings.svg" alt="fluent_settings">
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-panel">
+        <div class="settings-content">
+            <div class="settings-title d-flex align-items-center">
+                <button type="button" class="btn-close float-right js-settings-toggle"
+                    onclick="settingsToggleClose()"></button>
+
+                <h4 class="mb-0 ms-2 d-inline-block">Settings</h4>
+            </div>
+
+            <div class="settings-body">
+
+                <div class="alert alert-primary" role="alert">
+                    <div class="alert-message">
+                        <strong>Hey there!</strong> Set your own customized style below. Choose the ones that best
+                        fits your needs.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Color scheme</span>
+                    <span class="d-block text-muted mb-2">The perfect color mode for your app.</span>
+
+                    <div class="row g-0 text-center mx-n1 mb-2">
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="default">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-default"></div>
+                                </div>
+                            </label>
+                            Default
+                        </div>
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="colored">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-colored"></div>
+                                </div>
+                            </label>
+                            Colored
+                        </div>
+                    </div>
+                    <div class="row g-0 text-center mx-n1">
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="dark">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-dark"></div>
+                                </div>
+                            </label>
+                            Dark
+                        </div>
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="light">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-light"></div>
+                                </div>
+                            </label>
+                            Light
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Sidebar position</span>
+                    <span class="d-block text-muted mb-2">Toggle the position of the sidebar.</span>
+
+                    <div>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarPosition" value="left">
+                            <div class="settings-button">
+                                Left
+                            </div>
+                        </label>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarPosition" value="right">
+                            <div class="settings-button">
+                                Right
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Sidebar behavior</span>
+                    <span class="d-block text-muted mb-2">Change the behavior of the sidebar.</span>
+
+                    <div>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarBehavior" value="sticky">
+                            <div class="settings-button">
+                                Sticky
+                            </div>
+                        </label>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarBehavior" value="fixed">
+                            <div class="settings-button">
+                                Fixed
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<main class="content" *ngIf="expenseApprovalFlag">
+    <div class="container-fluid p-0">
+
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Expense Management</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item"><a href="#">Administration</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Expense</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-6 d-lg-flex align-items-center hdng-btm">
+                <div class="col-md-12">
+                    <ul class="mt-3 mt-lg-0 mb-0 tabstyle_nav">
+                        <li class="list-inline-item ">
+                            <a class="px-3 py-2 bg-white">Overview</a>
+                        </li>
+                        <li class="list-inline-item ">
+                            <a class="px-3 py-2 bg-white" (click)="expense()">Expenses</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="px-3 py-2 bg-white" (click)="expenseReport()">Reports</a>
+                        </li>
+                        <li class="list-inline-item active">
+                            <a class="px-3 py-2 bg-white" (click)="expenseApproval()">Approval</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-end mt-n1 hdng-btm">
+                <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                    <li class="list-inline-item">
+                        <select class="form-select border-1" aria-label="Leads">
+                            <option value="All">All</option>
+                            <option value="Pending Only">Pending Only</option>
+                        </select>
+                    </li>
+                    <li class="list-inline-item">
+                        <button class="btn btn-primary btn-lg" (click) = "addExpense()">Add Expense <i class="fas fa-plus"></i></button>
+                    </li>
+                    <li class="list-inline-item icon-border me-0">
+                        <a class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" title="" data-bs-original-title="More" aria-label="More"></a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#">Edit this Expense</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Change Expense image</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Add new task for this Expense</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>Expenses List</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length"><label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button type="button" class="btn btn-md bg-white px-4">CSV</button>
+                                <button type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4">Excel</button>
+                                <button type="button" class="btn bg-white px-4">Upload</button>
+                                <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More"></button>
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">User Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Joining Date</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Primary Product</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Designation</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Role</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Reporting</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <th width="40px">&nbsp;</th>
+                                        <th class="sorting align-middle">Submitter</th>
+                                        <th class="sorting align-middle">Total</th>
+                                        <th class="sorting align-middle">Category</th>
+                                        <th class="sorting align-middle">Report #</th>
+                                        <th class="sorting align-middle">Report Name</th>
+                                        <th class="sorting align-middle">Status</th>
+                                        <th width="40px" class="sorting align-middle">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th class="align-middle"><input type="checkbox" id="customCheck1"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle">
+                                            <select class="form-select">
+                                                <option value="All">All</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Approved">Approved</option>
+                                            </select>
+                                        </th>
+                                        <th width="40px">&nbsp;</th>
+
+
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">XYZ Supply Store</td>
+                                        <td class="align-middle">55000000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">014569</td>
+                                        <td class="align-middle">Office pen and all new</td>
+                                        <td class="align-middle">Pending</td>
+                                        <td class="align-middle"><button class="btn btn-warning btn-xs">Approve</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">XYZ Supply Store</td>
+                                        <td class="align-middle">60000000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">157893</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Pending</td>
+                                        <td class="align-middle"><button class="btn btn-warning btn-xs">Approve</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">ABC treding.co</td>
+                                        <td class="align-middle">240000</td>
+                                        <td class="align-middle">Other</td>
+                                        <td class="align-middle">879774</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Pending</td>
+                                        <td class="align-middle"><button class="btn btn-warning btn-xs">Approve</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">ABC treding.co</td>
+                                        <td class="align-middle">100000</td>
+                                        <td class="align-middle">Other</td>
+                                        <td class="align-middle">369969</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">SM Legal</td>
+                                        <td class="align-middle">8756660</td>
+                                        <td class="align-middle">Legal</td>
+                                        <td class="align-middle">636331</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">SM Legal</td>
+                                        <td class="align-middle">1100000</td>
+                                        <td class="align-middle">Legal</td>
+                                        <td class="align-middle">474711</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Pending</td>
+                                        <td class="align-middle"><button class="btn btn-warning btn-xs">Approve</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Service Inc.</td>
+                                        <td class="align-middle">29000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">232778</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Service Inc.</td>
+                                        <td class="align-middle">98000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">969115</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Research care Bro.</td>
+                                        <td class="align-middle">890000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">545778</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Research care Bro.</td>
+                                        <td class="align-middle">400000</td>
+                                        <td class="align-middle">Office Supplies</td>
+                                        <td class="align-middle">014782</td>
+                                        <td class="align-middle">22,000</td>
+                                        <td class="align-middle">Approved</td>
+                                        <td class="align-middle"><button
+                                                class="btn btn-info disabled btn-xs">Approve</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length"><label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                        </label>
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<!-- <footer class="mt-0 mb-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <address class="text-end">Copyrights protected by Navya IT. All Rights Reserved.</address>
+            </div>
+        </div>
+    </div>
+</footer> -->
+
+
+<main class="content" *ngIf = "addExpenseFlag">
+    <div class="container-fluid p-0">
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Expense Management</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item"><a href="#">Administration</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Expense</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-6 d-lg-flex align-items-center hdng-btm">
+
+                <ul class="mt-3 mt-lg-0 mb-0 tabstyle_nav">
+                    <li class="list-inline-item ">
+                        <a class="px-3 py-2 bg-white" href="administration-expense-management.html">Overview</a>
+                    </li>
+                    <li class="list-inline-item active">
+                        <a class="px-3 py-2 bg-white" (click) = "expense()">Expenses</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="px-3 py-2 bg-white" (click) = "expenseReport()">Reports</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="px-3 py-2 bg-white"
+                           (click) = "expenseApproval()">Approval</a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="col-md-6 text-end mt-n1">
+                <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                    <li class="list-inline-item">
+                        <button class="btn btn-primary btn-lg" (click) = "addExpense()">Add Expense <i class="fas fa-plus"></i></button>
+                    </li>
+                    <li class="list-inline-item icon-border me-0">
+                        <a class="px-0 border-0 d-inline-block align-middle dropdown-toggle no-dropdown-arrow" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="assets/images/hdr-menu-vertical.svg" alt="menu-vertical" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" title="" data-bs-original-title="More" aria-label="More"></a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#">Edit this Expense</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Change Expense image</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Add new task for this Expense</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="d-md-flex align-items-center mb-2 mb-lg-4">
+            <div class="p-2 border-primary border d-flex align-items-center expense_btm w-100">
+                <div class="col-auto d-block expense_btm_lft">
+                    <ul class="mt-3 mt-lg-0 mb-0">
+                        <li class="list-inline-item active">
+                            <a class="px-3 py-2" href="#">
+                                <img src="assets/images/expense-uicons_document-list.svg" alt="expense"
+                                    class="d-inline-block align-middle m-1"> Add Expense</a>
+                        </li>
+                        <li class="list-inline-item ">
+                            <a class="px-3 py-2" href="#">
+                                <img src="assets/images/expense_upload-alt.svg" alt="expense"
+                                    class="d-inline-block align-middle m-1"> Bulk Upload</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto d-block ms-auto expense_btm_rgt">
+                    <button class="btn btn-dark btn-lg me-2" type="button">Cancel <i
+                            class="fas fa-times-circle"></i></button>
+                    <button class="btn btn-secondary btn-lg me-2" type="button">Save &amp; Close <i
+                            class="fas fa-times-circle"></i></button>
+                    <button class="btn btn-success btn-lg" type="button">Save &amp; Next <i
+                            class="fas fa-chevron-circle-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div
+                                class="w-100 h-100 border border-primary expense_body_lft d-flex justify-content-center align-items-center bg-light">
+                                <div class="d-block text-center my-5">
+                                    <p>Drag and drop your file here.</p>
+                                    <p>--or--</p>
+                                    <div class="input-button-wrap">
+                                        <label class="input-button" for="upload">Upload File</label>
+                                        <input id="upload" type="file">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="expense_body_rgt">
+                                <!-- <form action="#" method="post"> -->
+                                    <div class="col-auto d-block mb-2">
+                                        <label for="expensedate" class="form-label d-block"><span
+                                                class="text-danger">*</span> Expense Date</label>
+                                        <div class="input-group date" id="datepicker">
+                                            <input type="date" class="form-control" id="expensedate">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto d-block mb-2">
+                                        <label for="merchant" class="form-label d-block"><span
+                                                class="text-danger">*</span> Merchant</label>
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="merchant">
+                                                <option selected="Select or type to add">Select or type to add</option>
+                                                <option value="options 1">options 1</option>
+                                                <option value="options 2">options 2</option>
+                                                <option value="options 3">options 3</option>
+                                                <option value="options 4">options 4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto d-block mb-2">
+                                        <label for="category" class="form-label d-block"><span
+                                                class="text-danger">*</span> Select Category</label>
+                                        <div class="input-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="category">
+                                                <option selected="Select or type to add">Select or type to add</option>
+                                                <option value="Labor">Labor</option>
+                                                <option value="Lodging">Lodging</option>
+                                                <option value="Materials">Materials</option>
+                                                <option value="Meals and Entertainment">Meals and Entertainment</option>
+                                                <option value="Mortgages">Mortgages</option>
+                                                <option value="Office Supplies">Office Supplies</option>
+                                                <option value="TDS Payable">TDS Payable</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto d-block mb-2">
+                                        <label for="amount" class="form-label"><span class="text-danger">*</span>
+                                            Amount</label>
+                                        <div class="input-group">
+                                            <input type="text" name="Opportunityname" class="form-control" id="amount">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-auto d-block mb-3">
+                                        <div class="form-check date d-inline-block align-middle">
+                                            <input class="form-check-input" type="checkbox" value="" id="popup_yearly"
+                                                checked="">
+                                            <label class="form-check-label" for="popup_yearly">Claim
+                                                Reimbursement</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto d-block mb-2">
+                                        <label for="address_popup"
+                                            class="form-label col-auto d-block">Description</label>
+                                        <textarea name="Address" class="form-control" id="address_popup" rows="7"
+                                            style="height:200px"></textarea>
+                                    </div>
+
+                                    <div class="col-auto d-block">
+                                        <label for="reference" class="form-label">Reference #</label>
+                                        <div class="input-group">
+                                            <input type="text" name="Opportunityname" class="form-control"
+                                                id="reference">
+                                        </div>
+                                    </div>
+
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="d-md-flex align-items-center justify-content-end mt-4 mb-2 mb-lg-4">
+            <div class="p-2">
+                <div class="col-auto d-block ms-auto expense_btm_rgt">
+                    <button class="btn btn-dark btn-lg me-2" type="button">Cancel <i
+                            class="fas fa-times-circle"></i></button>
+                    <button class="btn btn-secondary btn-lg me-2" type="button">Save &amp; Close <i
+                            class="fas fa-times-circle"></i></button>
+                    <button class="btn btn-success btn-lg" type="button">Save &amp; Next <i
+                            class="fas fa-chevron-circle-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</main>

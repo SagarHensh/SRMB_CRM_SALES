@@ -1,0 +1,571 @@
+<main class="content">
+    <div class="container-fluid p-0">
+
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center main-hdng">
+                <div class="col-md-6">
+                    <h3>Workflow Rules</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-end">
+                                <li class="breadcrumb-item"><a href="#">Administration</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Workflow Rules</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mb-lg-4">
+            <div class="col-md-12 d-lg-flex align-items-center hdng-btm">
+                <div class="col-md-8">
+                    <small class="text-dark lh-sm">Workflow rules allow you to perform certain automatic actions on
+                        specific records based on filter criteria. Workflow automations can send emails, update fields,
+                        create records and much more.</small>
+                </div>
+                <div class="col-md-4 text-end mt-n1">
+                    <ul class="list-inline ml-auto mt-3 mt-lg-0 mb-0">
+                        <li class="list-inline-item">
+                            <a class="btn btn-primary btn-lg" (click) = "createRule()">Create
+                                Rule <i class="fas fa-edit"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+                <div class="bg-white shadow-lg py-4 px-4 rounded-3">
+                    <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        <div class="d-md-flex align-items-center mb-3">
+                            <div class="col-auto d-block">
+                                <h3>Flow list</h3>
+                            </div>
+                            <div class="col-auto d-block ms-auto">
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length"><label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                            </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm ms-auto  btn-download-group">
+                                <button type="button" class="btn btn-md bg-white px-4">CSV</button>
+                                <button type="button" class="btn bg-white px-4">PDF</button>
+                                <button type="button" class="btn bg-white px-4">Excel</button>
+                                <button type="button" class="ps-2 dropdown-toggle no-dropdown-arrow"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="assets/images/filtering.svg" alt="filtering" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="More"></button>
+                                <div class="dropdown-menu dropdown-menu-end addDropdownhead">
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">User Name</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch1">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Phone</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch2">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Email ID</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch3">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">State</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">District</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch4">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Joining Date</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch5">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Primary Product</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch6">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Designation</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch7">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Role</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch8">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-md-flex align-items-center" href="#">
+                                        <span class="col-auto d-block">Reporting</span>
+                                        <div class="form-check form-switch col-auto d-block ms-auto">
+                                            <input class="form-check-input" type="checkbox" id="switch9">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatables-column-search-select-inputs" class="table table-striped dataTable"
+                                style="width: 100%;" aria-describedby="datatables-column-search-select-inputs_info">
+                                <thead class="thead-dark">
+                                    <tr role="row">
+                                        <th width="40px">&nbsp;</th>
+                                        <th class="sorting align-middle">Rule Name</th>
+                                        <th class="sorting align-middle">All Modules</th>
+                                        <th class="sorting align-middle">Execute On</th>
+                                        <th class="sorting align-middle">Action</th>
+                                        <th class="sorting align-middle">Last Modified</th>
+                                        <th class="sorting align-middle">Status</th>
+                                        <th width="70px" class="sorting align-middle">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th class="align-middle"><input type="checkbox" id="customCheck1"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><select class="form-select">
+                                                <option value="All">All</option>
+                                                <option value="Deals">Deals</option>
+                                                <option value="Lead">Lead</option>
+                                            </select>
+                                        </th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle"><input type="text" placeholder="Search"
+                                                class="form-control input-sm"></th>
+                                        <th class="align-middle">
+                                            <select class="form-select">
+                                                <option value="All">All</option>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </th>
+                                        <th width="70px">&nbsp;</th>
+
+
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle"><a
+                                            (click) = "ruleDetails(1)">Big deal response</a>
+                                        </td>
+                                        <td class="align-middle">Deals</td>
+                                        <td class="align-middle">Create or Edit</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">04.08.2022</td>
+                                        <td class="align-middle ">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr role="row" class="odd">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr role="row" class="even">
+                                        <td class="align-middle"><input type="checkbox" id="customCheck2"></td>
+                                        <td class="align-middle">Small Value</td>
+                                        <td class="align-middle">Lead</td>
+                                        <td class="align-middle">Create</td>
+                                        <td class="align-middle">1</td>
+                                        <td class="align-middle">07.09.2022</td>
+                                        <td class="align-middle">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="moduleSwitch">
+                                            </div>
+                                        </td>
+                                        <td width="70px" class="align-middle">
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/create.svg" alt="create"></a>
+                                            <a class="d-inline-block align-middle" href="#">
+                                                <img src="assets/images/trash.svg" alt="trash"></a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-xl-flex align-items-center mt-3">
+
+                            <div class="col-auto d-block">
+
+                                <div class="text-center">
+                                    <div class="dataTables_length" id="datatables-reponsive_length"><label>Records per
+                                            page <select name="datatables-reponsive_length"
+                                                aria-controls="datatables-reponsive" class="form-select form-select-sm">
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="30">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select> 1 - 10</label>
+                                        <label>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-left.svg" alt="chevron-left"></a>
+                                            <a class="px-1 d-inline-block align-middle" href="#">
+                                                <img src="assets/images/chevron-right.svg" alt="chevron-right"></a>
+                                            <label>
+                                            </label></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div id="settings" class="settings js-settings">
+    <div onclick="settingsToggle()" class="settings-toggle">
+        <div class="settings-toggle-option settings-toggle-option-text js-settings-toggle" title="Theme Builder">
+            <div class="d-inline-block my-1"><img src="assets/images/fluent_paint-bucket.svg" alt="fluent_paint-bucket">
+            </div>
+            <div class="d-inline-block my-1"><img src="assets/images/fluent_settings.svg" alt="fluent_settings">
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-panel">
+        <div class="settings-content">
+            <div class="settings-title d-flex align-items-center">
+                <button type="button" class="btn-close float-right js-settings-toggle"
+                    onclick="settingsToggleClose()"></button>
+
+                <h4 class="mb-0 ms-2 d-inline-block">Settings</h4>
+            </div>
+
+            <div class="settings-body">
+
+                <div class="alert alert-primary" role="alert">
+                    <div class="alert-message">
+                        <strong>Hey there!</strong> Set your own customized style below. Choose the ones that best
+                        fits your needs.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Color scheme</span>
+                    <span class="d-block text-muted mb-2">The perfect color mode for your app.</span>
+
+                    <div class="row g-0 text-center mx-n1 mb-2">
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="default">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-default"></div>
+                                </div>
+                            </label>
+                            Default
+                        </div>
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="colored">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-colored"></div>
+                                </div>
+                            </label>
+                            Colored
+                        </div>
+                    </div>
+                    <div class="row g-0 text-center mx-n1">
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="dark">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-dark"></div>
+                                </div>
+                            </label>
+                            Dark
+                        </div>
+                        <div class="col">
+                            <label class="mx-1 d-block mb-1">
+                                <input class="settings-scheme-label" type="radio" name="theme" value="light">
+                                <div class="settings-scheme">
+                                    <div class="settings-scheme-theme settings-scheme-theme-light"></div>
+                                </div>
+                            </label>
+                            Light
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Sidebar position</span>
+                    <span class="d-block text-muted mb-2">Toggle the position of the sidebar.</span>
+
+                    <div>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarPosition" value="left">
+                            <div class="settings-button">
+                                Left
+                            </div>
+                        </label>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarPosition" value="right">
+                            <div class="settings-button">
+                                Right
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <span class="d-block font-size-lg font-weight-bold">Sidebar behavior</span>
+                    <span class="d-block text-muted mb-2">Change the behavior of the sidebar.</span>
+
+                    <div>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarBehavior" value="sticky">
+                            <div class="settings-button">
+                                Sticky
+                            </div>
+                        </label>
+                        <label>
+                            <input class="settings-button-label" type="radio" name="sidebarBehavior" value="fixed">
+                            <div class="settings-button">
+                                Fixed
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

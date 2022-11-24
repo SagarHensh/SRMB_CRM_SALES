@@ -1,0 +1,11 @@
+/* .btn-close{
+    top: -27px !important;
+    right: -14px !important;
+} */
+.td-icon{
+    display: flex;
+}
+
+.td-icon a img {
+    max-width: inherit;
+}
