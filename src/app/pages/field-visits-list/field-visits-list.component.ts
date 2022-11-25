@@ -66,6 +66,7 @@ export class FieldVisitsListComponent implements OnInit {
   visitedBy = "";
   contactPerson = "";
   phone = "";
+  choseDate = "";
   organization = "";
   userNameTo = "";
   visitToName = "";
@@ -73,7 +74,7 @@ export class FieldVisitsListComponent implements OnInit {
   searchByUserRole = "";
   filterVisitTypeArr: any = [];
   clientid = "";
-  filterVisitType: any;
+  filterVisitType= "" as any;
 
 
 
@@ -182,9 +183,10 @@ export class FieldVisitsListComponent implements OnInit {
       userName: this.visitToName,
       phoneNumber: this.phone,
       visitedByName: this.visitedBy,
-      type: this.filterVisitType
+      type: this.filterVisitType,
+      actualDate: this.choseDate
     };
-    // console.log("Request data for field listing params data>>>>",param);
+    console.log("Request data for field listing params data>>>>",param);
 
     this.leadRest.getAllFieldVisitsList(param).subscribe((res: any) => {
       // console.log("Field Visit Res>>>>>>>>>>", res);
@@ -301,16 +303,16 @@ export class FieldVisitsListComponent implements OnInit {
     }
   }
 
-  searchByContactPerson(event: any) {
-    // if (event.target.value.length >= 3) {
-    //   this.contactPerson = event.target.value;
-    //   this.getAllOpportunity();
-    // }
-    // if (event.target.value.length == 0) {
-    //   this.contactPerson = "";
-    //   this.getAllOpportunity();
-    // }
-  }
+  // searchByContactPerson(event: any) {
+  //   // if (event.target.value.length >= 3) {
+  //   //   this.contactPerson = event.target.value;
+  //   //   this.getAllOpportunity();
+  //   // }
+  //   // if (event.target.value.length == 0) {
+  //   //   this.contactPerson = "";
+  //   //   this.getAllOpportunity();
+  //   // }
+  // }
 
   searchByPhone(event: any) {
     if (event.target.value.length >= 3) {
@@ -322,17 +324,22 @@ export class FieldVisitsListComponent implements OnInit {
       this.getAllOpportunity();
     }
   }
-
-  searchByType(event: any) {
-    // if (event.target.value.length >= 3) {
-    //   this.organization = event.target.value;
-    //   this.getAllOpportunity();
-    // }
-    // if (event.target.value.length == 0) {
-    //   this.organization = "";
-    //   this.getAllOpportunity();
-    // }
+  searchByDate(){
+        console.log("this is a date",this.choseDate);
+        this.getAllOpportunity();
+        
   }
+
+  // searchByType(event: any) {
+  //   if (event.target.value.length >= 3) {
+  //     this.organization = event.target.value;
+  //     this.getAllOpportunity();
+  //   }
+  //   if (event.target.value.length == 0) {
+  //     this.organization = "";
+  //     this.getAllOpportunity();
+  //   }
+  // }
   getRole() {
     this.leadRest.getVisitType({}).subscribe((res: any) => {
       // console.log(" get Visited Type list REspoNSe>>>>>>>>", res);
@@ -458,7 +465,7 @@ export class FieldVisitsListComponent implements OnInit {
   getStatusForHTML(val: any) {
     let str: any = "";
     if (val == 1) {
-      str = "Approved";
+      str = "Assigned";
     } else {
       str = "Not Approved"
     }

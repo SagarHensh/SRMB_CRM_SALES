@@ -270,13 +270,13 @@ export class TaskModalComponent implements OnInit {
                 //     this.notifier.notify('error', "Please enter mail id");
                 //     return;
                 // }
-                // if (obj.item != "") {
-                //     if (this.commonService.mailFormatCheck(obj.item) == false) {
-                //         this.notifier.notify('error', "Please enter valid mail id");
-                //         return;
+                if (obj.item != "") {
+                    if (this.commonService.mailFormatCheck(obj.item) == false) {
+                        this.notifier.notify('error', "Please enter valid mail id");
+                        return;
 
-                //     }
-                // }
+                    }
+                }
 
             }
             if (this.email.length > 1) {

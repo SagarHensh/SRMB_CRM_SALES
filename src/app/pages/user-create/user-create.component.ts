@@ -100,9 +100,44 @@ export class UserCreateComponent implements OnInit {
       this.notifier.notify('error', "Please enter first name");
       return;
     }
+    if (this.fName != '' || this.fName != null) {
+      var c = 0
+      for (var i=0; i<this.fName.length;i++){
+        if(this.fName[0].charCodeAt(0)==32)
+        {
+          this.notifier.notify('error', 'Not allowed white space');
+          return;
+        }
+        
+          if(this.fName[i].charCodeAt(0)==32 ){
+            c=c+1;
+            
+             if (c>1){
+              this.notifier.notify('error', 'not allowed white space');
+              return ;
+             }
+          }
+        }
+      }
     if (this.lName == "" || this.lName == null) {
       this.notifier.notify('error', "Please enter last name");
       return;
+    }
+    if (this.lName != '' || this.lName==null){
+      var counter = 0 
+      for( var i=0; i<this.lName.length;i++){
+        if(this.lName[0].charCodeAt(0)==32){
+          this.notifier.notify('error', 'Not allowed white space');
+          return;
+        }
+        if(this.lName[i].charCodeAt(0)==32){
+          counter = counter +1;
+            if(counter > 1){
+              this.notifier.notify('error', 'Not allowed white space');
+              return;
+            }
+        }
+      }
     }
     if (this.gender == "" || this.gender == null) {
       this.notifier.notify('error', "Please choose gender");
@@ -155,6 +190,10 @@ export class UserCreateComponent implements OnInit {
       this.notifier.notify('error', "Please enter address");
       return;
     }
+      // if (this.address == "" || this.address == null)
+      // {
+
+      // }
 
     if (this.country == "" || this.country == null) {
       this.notifier.notify('error', "Please select country");

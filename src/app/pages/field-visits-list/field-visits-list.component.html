@@ -221,7 +221,7 @@
 
                                                 <th *ngIf="th.title === 'Seq. No.' && th.isView"></th>
 											    <th class="align-middle" *ngIf="th.title === 'Visit To' && th.isView">
-                                                <input type="text" placeholder="Search by name"
+                                                <input type="text" placeholder="Search"
                                                         class="form-control input-sm" (keyup)="searchByOppName($event)">
                                                 </th>
 
@@ -231,22 +231,27 @@
                                                 </th> -->
                                                 
                                                 <th class="align-middle" *ngIf="th.title === 'Phone Number' && th.isView">
-                                                    <input type="text" placeholder="phone" class="form-control input-sm"
+                                                    <input type="text" placeholder="Search" class="form-control input-sm"
                                                         (keyup)="searchByPhone($event)">
                                                 </th>
                                                 <th class="align-middle" *ngIf="th.title === 'Visited By' && th.isView">
-                                                    <input type="text" placeholder="Visit By" class="form-control input-sm"
+                                                    <input type="text" placeholder="Search" class="form-control input-sm"
                                                         (keyup)="searchByVisit($event)">
                                                 </th>
                                                 
                                                 <th class="align-middle" *ngIf="th.title === 'Visit Type' && th.isView">
                                                     <select class="form-select" (change)="searchByVisitType($event)" [(ngModel)]="filterVisitType">
-                                                        <option [value]="">All</option>
+                                                        <option value="">All</option>
                                                         <option *ngFor="let data of filterVisitTypeArr" [value]="data.contactTypeId">
                                                             {{data.contactTypeName}}</option>
     
                                                     </select>
                                                 </th>
+
+                                                <th class="align-middle" *ngIf="th.title === 'Visit Date' && th.isView">
+                                                 <input type="date" placeholder="Visit Date" class="form-control input-sm" [(ngModel)]="choseDate"
+                                                    (change)="searchByDate()">
+                                                 </th>
 
                                           
                                                 </ng-container>
@@ -297,6 +302,7 @@
 
                                                     <td class="align-middle"
                                                         *ngIf="th.title == 'Approval Status' && th.isView">
+                                                        <!-- <span *ngIf data.CRMapprovedStatus="0"></span> -->
                                                         {{getStatusForHTML(data.CRMapprovedStatus)}}
                                                     </td>
 

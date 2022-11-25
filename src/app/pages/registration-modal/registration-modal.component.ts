@@ -93,7 +93,7 @@ export class RegistrationModalComponent implements OnInit {
   allExistingUser: any = [];
   searchTextCustName=""
   searchName=""
-  contactName=""
+  contactName:any
 
 
 
@@ -895,20 +895,20 @@ export class RegistrationModalComponent implements OnInit {
 
 
   keyword = 'name';
-  data = [
-    {
-      // id: 1,
-      name: 'Georgia'
-    },
-    {
-      //  id: 2,
-      name: 'Usa'
-    },
-    {
-      //  id: 3,
-      name: 'England'
-    }
-  ];
+  // data = [
+  //   {
+  //     // id: 1,
+  //     name: 'Georgia'
+  //   },
+  //   {
+  //     //  id: 2,
+  //     name: 'Usa'
+  //   },
+  //   {
+  //     //  id: 3,
+  //     name: 'England'
+  //   }
+  // ];
   selectEvent(item: any) {
     // do something with selected item
     console.log("Selected Existing Customer:", item);
@@ -994,9 +994,14 @@ export class RegistrationModalComponent implements OnInit {
           this.allExistingUser.push({
             id: ex.contactId,
             name: ex.contactName
+
           })
+        
+
         })
         this.exsistingCustomerName = res.response;
+      
+
         console.log("Existing Contact List>>>>>", this.exsistingCustomerName);
       }
     })

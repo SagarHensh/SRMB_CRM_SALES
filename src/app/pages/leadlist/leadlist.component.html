@@ -413,17 +413,26 @@
                                                 {{data.firstName}} {{data.lastName}}</td>
 
                                             <td class="align-middle" *ngIf="th.title === 'Organization' && th.isView">
-                                                {{data.organizationName}}</td>
+                                                <span *ngIf="data.organizationName == '' || data.organizationName == null ">N/A</span>
+                                                <span *ngIf="data.organizationName !='' || data.organizationName != null "> {{data.organizationName}}</span>
+                                            </td>
+                                                
 
                                             <td class="align-middle" *ngIf="th.title === 'Title' && th.isView">
                                                 {{data.title}}</td>
 
 
                                             <td class="align-middle" *ngIf="th.title === 'Phone' && th.isView">
-                                                {{data.phone}}</td>
+                                                <span *ngIf="data.phone == '' || data.phone == null ">N/A</span>
+                                                <span *ngIf="data.phone !='' || data.phone != null "> {{data.phone}}</span>
+                                            </td>
+
 
                                             <td class="align-middle" *ngIf="th.title === 'Email ID' && th.isView">
-                                                {{data.email}}</td>
+                                                <span *ngIf="data.email == '' || data.email == null ">N/A</span>
+                                                <span *ngIf="data.email !='' || data.email != null "> {{data.email}}</span>
+                                            </td>
+
 
                                             <td class="align-middle" *ngIf="th.title === 'Lead Status' && th.isView">
                                                 {{data.leadTypeStatus}}</td>

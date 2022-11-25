@@ -315,7 +315,7 @@
 										<ng-container *ngFor="let th of tableHeader; let t = index">
 											<th *ngIf="th.title === 'Sl No.' && th.isView"></th>
 											<th class="align-middle" *ngIf="th.title === 'Employee Name' && th.isView">
-												<input type="text" placeholder="Search" class="form-control input-sm"
+												<input type="text" placeholder="Name Search" class="form-control input-sm"
 													(keyup)="searchByEmpName($event)">
 											</th>
 											<th class="align-middle" *ngIf="th.title === 'Phone' && th.isView">

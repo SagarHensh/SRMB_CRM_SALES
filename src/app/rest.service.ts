@@ -67,7 +67,7 @@ export class RestService {
   }
 
   getAssignedEmployeeListFromApi(data:any){
-    return this.http.post(this.API_ROOT + 'v2/enqueryManagement/getSelectedUsrs',data,httpOptions);
+    return this.http.post(this.API_ROOT + 'v3/enqueryManagement/getSelectedUsrs',data,httpOptions);
   }
 
   sendDataFoInsertEnquery(data:any){
@@ -95,11 +95,20 @@ export class RestService {
     return this.http.post(this.API_ROOT + 'v1/enqueryManagement/editInternalEnquiry',data,httpOptions);
   }
 
+  getAssignedEmloyee(data:any) : any {
+    return this.http.post(this.API_ROOT + 'v1/enqueryManagement/getAssignEmployeeByenqId',data,httpOptions);
+  }
+
+  assignUpate(data:any) : any {
+    return this.http.post(this.API_ROOT + 'v1/enqueryManagement/updateAssignEmployeeByenqId',data,httpOptions);
+  }
+
+  
 
 //--------------------------- Delete Enquiry-------------------------//
 
 deleteEnquiry(data:any){
-  return this.http.post(this.API_ROOT + '',data,httpOptions);
+  return this.http.post(this.API_ROOT + 'v1/enqueryManagement/deleteInternalEnquiry',data,httpOptions);
 }
 
 //----------------------------- Download Enquiry -------------------//
@@ -116,4 +125,11 @@ updateEnqueryApprovalStatus(data: any): any {
   return this.http.post(this.API_ROOT + 'v1/enqueryManagement/approveInternalEnquiry', data, httpOptions);
 }
 
+
+//**********************************************************************to fetch employee type list***************************************************/
+
+getEmployeeType(data: any):any{
+  return this.http.post(this.API_ROOT + 'v1/mstDesignation/getAllDesignations', data, httpOptions);
+}
+  
 }

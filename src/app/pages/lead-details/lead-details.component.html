@@ -1155,24 +1155,71 @@
                 <div class="bg-white shadow-lg py-3 px-3 rounded-3 profile-details-info mb-3">
                     <div class="hdr d-md-flex align-items-center mb-3">
                         <div class="col-auto d-block">
+                            <h3>Visit activities</h3>
+                        </div>
+                    </div>
+                    <div class="lead-details-info-inner pad-sm-table">
+                        <table class="table table-sm table-borderless my-2">
+                            <tbody>
+                                <span *ngIf="VisitDetails == '' ">
+                                    <tr>
+                                        <td>Visit Not Done Yet!</td>
+                                    </tr>
+                                </span>
+                                <span  *ngIf="VisitDetails != '' ">
+                                    <tr><th style="padding-left: 5px;">Visited by:</th><td style="padding-left: 245px;">{{VisitDetails.userName}}</td></tr>
+                                    <tr><th style="padding-left: 5px;">Visit Date:</th><td style="padding-left: 245px;">{{VisitDetails.actualDate | date}}</td></tr>
+                                    <tr><th style="padding-left: 5px;">Visit Status:</th><td style="padding-left: 245px;">{{VisitDetails.visitStatusName}}</td></tr>    
+                                    <tr><th style="padding-left: 5px;">Customer Notes:</th><td style="padding-left: 245px;">{{VisitDetails.customerFeedback}}</td></tr> 
+                                    <tr><th style="padding-left: 5px;">NextFollowUpDate:</th>
+                                        <td style="padding-left: 245px;">
+                                            <span *ngIf="VisitDetails.nextFollowUpDate == '' || VisitDetails.nextFollowUpDate == null "> N/A </span>
+                                            <span *ngIf="VisitDetails.nextFollowUpDate !='' || VisitDetails.nextFollowUpDate != null "> {{VisitDetails.nextFollowUpDate}}</span>
+                                        </td>
+                                    </tr>            
+                                    <tr><th style="padding-left: 5px;">Converted:</th>
+                                        <td style="padding-left: 245px;">
+                                            <span *ngIf="VisitDetails.isConvertion == 0 "> Not Converted</span>
+                                            <span *ngIf="VisitDetails.isConvertion == 1 "> Converted </span>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr><th>Converted status:</th><td>{{getStatusForHTML(convertedStatus)}}</td></tr> -->                                   
+                                    <tr><th style="padding-left: 5px;">ApprovedStatus:</th>
+                                        <td style="padding-left: 245px;">
+                                            <span *ngIf="VisitDetails.CRMapprovedStatus == 0"> No </span>
+                                            <span *ngIf="VisitDetails.CRMapprovedStatus == 1"> Yes </span>
+                                        </td>
+                                    </tr> 
+                                </span> 
+
+                        <!-- <tr><th>ApprovedStatus: </th><td>{{getConvertionStatusForHTML(CRMapprovedStatus)}}</td></tr>     -->
+                                <span [hidden]="isVisitNote">
+                                    <div class="col-auto d-block"> 
+                                        <h3>Visit Note</h3>
+                                    </div>
+                                    <span *ngFor="let visitNotes of visitNoteDetails">
+                                        <tr><th>Item:</th><td style="padding-left: 284px;">{{visitNotes.itemName}}</td></tr>
+                                        <tr><th>Notes:</th><td style="padding-left: 284px;">{{visitNotes.itemFeedback}}</td></tr>
+                                        <tr><th>Posted Time:</th><td style="padding-left: 284px;">{{visitNotes.createdAt}}</td></tr>
+                                    </span>
+                                </span>
+                            </tbody>
+                        </table>                    
+                    </div>
+                </div>
+
+                <div class="bg-white shadow-lg py-3 px-3 rounded-3 profile-details-info mb-3">
+                    <div class="hdr d-md-flex align-items-center mb-3">
+                        <div class="col-auto d-block">
                             <h3>Lead by</h3>
                         </div>
                     </div>
                     <div class="lead-details-info-inner pad-sm-table">
                         <table class="table table-sm table-borderless my-2">
                             <tbody>
-                                <tr>
-                                    <th>Lead owner:</th>
-                                    <td>{{ownerName}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Lead created :</th>
-                                    <td>{{leadCreateAt}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Lead Source :</th>
-                                    <td>{{leadSourceTypename}}</td>
-                                </tr>
+                                <tr><th>Lead owner:</th><td>{{ownerName}}</td></tr>
+                                <tr><th>Lead created :</th><td>{{leadCreateAt}}</td></tr>
+                                <tr><th>Lead Source :</th><td>{{leadSourceTypename}}</td></tr>
                             </tbody>
                         </table>
                         <!-- <div class="mt-2 text-start">
@@ -1180,6 +1227,8 @@
                         </div> -->
                     </div>
                 </div>
+
+                
                 <div class="bg-white shadow-lg py-3 px-3 rounded-3 profile-details-info mb-3">
                     <div class="hdr d-xl-flex align-items-center mb-3">
                         <div class="col-auto d-block">

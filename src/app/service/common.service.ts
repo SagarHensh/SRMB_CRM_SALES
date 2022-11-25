@@ -236,7 +236,7 @@ export class CommonService {
         return year + '-' + actualMonth + '-' + actualDate;
     }
     getDateFormatNew3(newDate: any): any {
-        console.log('>>>>>>>>>>>>>', newDate);
+        // console.log('>>>>>>>>>>>>>', newDate);
         let date = new Date(newDate);
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
@@ -264,94 +264,94 @@ export class CommonService {
     //---------------------------- CRM Menu Header -------------------------//
 
     enquiryHeader = [
-        {
-            title: "Sl No.",
-            isView: true
-        },
-        {
-            title: "Enquiry Source",
-            isView: true
-        },
-        {
-            title: "Enquiry Type",
-            isView: true
-        },
-        {
-            title: "Owner Name",
-            isView: true
-        },
-        {
-            title: "Owner Phone No",
-            isView: true
-        },
-        {
-            title: "Owner Email",
-            isView: true
-        },
-        {
-            title: "Business Name",
-            isView: true
-        },
-        {
-            title: "Business Phone No",
-            isView: true
-        },
-        {
-            title: "Business Email",
-            isView: true
-        },
-        {
-            title: "Business Address",
-            isView: true
-        },
-        {
-            title: "Address",
-            isView: true
-        },
-        {
-            title: "Country",
-            isView: true
-        },
-        {
-            title: "State",
-            isView: true
-        },
-        {
-            title: "District",
-            isView: true
-        },
-        {
-            title: "City/Village",
-            isView: true
-        },
-        {
-            title: "Zone",
-            isView: true
-        },
-        {
-            title: "Pincode",
-            isView: true
-        },
-        {
-            title: "Notes",
-            isView: true
-        },
-        {
-            title: "Employee Type",
-            isView: true
-        },
-        {
-            title: "Assigned Employee",
-            isView: true
-        },
-        {
-            title: "Assigned Date",
-            isView: true
-        },
-        {
-            title: "Action",
-            isView: true
-        }
-    ];
-
+    //     {
+    //         title: "Sl No.",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Enquiry Source",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Enquiry Type",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Owner Name",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Owner Phone No",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Owner Email",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Business Name",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Business Phone No",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Business Email",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Business Address",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Address",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Country",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "State",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "District",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "City/Village",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Zone",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Pincode",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Notes",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Employee Type",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Assigned Employee",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Assigned Date",
+    //         isView: true
+    //     },
+    //     {
+    //         title: "Action",
+    //         isView: true
+    //     }
+    // ];
+    ]
 }

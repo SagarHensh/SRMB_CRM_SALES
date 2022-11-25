@@ -373,7 +373,7 @@ export class ContactsListComponent implements OnInit {
             }
         }
     }
-
+//...................this is for sample file download ................//
     bulkInsert() {
         const data = {
             fileName:this.uploadBulkFile

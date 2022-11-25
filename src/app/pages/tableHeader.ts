@@ -210,10 +210,10 @@ const ENQUIRIE_LIST=[
         title: "Notes",
         isView: true
     },
-    {
-        title: "Employee Type",
-        isView: true
-    },
+    // {
+    //     title: "Employee Type",
+    //     isView: true
+    // },
     {
         title: "Assigned Employee",
         isView: true
@@ -222,6 +222,16 @@ const ENQUIRIE_LIST=[
         title: "Assigned Date",
         isView: true
     },
+    {
+        title: "Assigned Due Date",
+        isView:true
+    },
+    {
+        title: "Approval Status",
+        isView: true
+    },
+
+    
 
 
 ];

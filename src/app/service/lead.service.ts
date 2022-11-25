@@ -30,9 +30,9 @@ export class LeadService {
     return this.http.post(this.API_ROOT + 'v2/leadsManagement/getContactTypes', data, httpOptions);
   }
 
-  leadSource(data: any): any {
-    return this.http.post(this.API_ROOT + 'v1/leadSource/getAllData', data, httpOptions);
-  }
+  // leadSource(data: any): any {
+  //   return this.http.post(this.API_ROOT + 'v1/leadSource/getAllData', data, httpOptions);
+  // }
 
   // getAllUser(data: any): any {
   //   return this.http.get(this.API_ROOT + 'v1/leadsManagement/getAllUser', data);

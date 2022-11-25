@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/service/common.service';
 import { RestService } from 'src/app/rest.service';
 import { ConfigService } from 'src/app/service/config.service';
 import { ENQUIRIE_LIST } from '../tableHeader';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-enquery',
   templateUrl: './enquery.component.html',
@@ -23,8 +24,6 @@ export class EnqueryComponent implements OnInit {
   ownerLastName = "";
   ownerPhnNo = [{ item: "" }];
   ownerEmail = [{ item: "" }];
-  
-
   businessType: any;
   allOrganizationArray: any = [];
   buisnessName = "";
@@ -37,6 +36,8 @@ export class EnqueryComponent implements OnInit {
   pinCode = "";
   notes = "";
   assignedDate = "";
+  assignDueDate = "";
+
   country = "" as any;
   state = "" as any;
   district = "" as any;
@@ -53,7 +54,6 @@ export class EnqueryComponent implements OnInit {
   enquiry_TypeList: any = [];
   employee_TypeList: any = [];
   enqueryData: any = [];
-
   selectedVal: number = 50;
   isdisable: boolean = false;
   isPrevious: boolean = true;
@@ -84,22 +84,28 @@ export class EnqueryComponent implements OnInit {
   ownPhoneNoText = "";
   ownEmailText = "";
   businessNameText = "";
-
+  stateNameText = "";
+  districtNameText="";
+  zoneNameText= "";
+  approvalStatu="" as any
   permissionData: any
   authUserData: any
-
-
-  selectedStatus: any;
+  selectedStatus="" as any;
 
   approvedStatus: any = [
     {
       id: 0,
-      name: "Not Approve"
+      name: "Not seen"
     }, {
       id: 1,
       name: "Approve"
+    },
+    {
+      id:2,
+      name: "false"
     }
   ];
+  min="" as any 
   statusRemarks: any;
 
   @ViewChild('addEnqueryDesign') addEnqueryModal: any;
@@ -113,9 +119,12 @@ export class EnqueryComponent implements OnInit {
 
 
 
-  constructor(private modalService: NgbModal, private common: CommonService, private rest: RestService, private notifier: NotifierService, private config: ConfigService) { }
+  constructor(private modalService: NgbModal,private datepipe :DatePipe, private common: CommonService, private rest: RestService, private notifier: NotifierService, private config: ConfigService) { }
+
+  
 
   ngOnInit(): void {
+    this.getEmployeeeType();
     this.getEnqueryLandingData();
     this.getEnqueryList();
     this.getOrganizationList();
@@ -123,8 +132,18 @@ export class EnqueryComponent implements OnInit {
     this.tableHeader = ENQUIRIE_LIST;
     let menuItem: any = localStorage.getItem('userdlt');
     this.authUserData = JSON.parse(menuItem);
-
+    // console.log("this is authUser parse form",this.authUserData);
+    
     this.getPermissionData();
+    // this.assignDueDate = new Date().toISOString().split('T')[0]; 
+    const todayDate = new Date();
+    const todayMonth = todayDate.getMonth();
+    const todayDay = todayDate.getDate()+1;
+    const todayYear = todayDate.getFullYear();
+    this.min = new Date(todayYear , todayMonth, todayDay)
+    this.min = this.datepipe.transform(this.min,'yyyy-MM-dd')
+    // console.log("date picker",this.min);
+    
   }
 
   getPermissionData() {
@@ -150,51 +169,148 @@ export class EnqueryComponent implements OnInit {
     })
   }
 
-
-
   editEnq(eId: any) {
     this.enquiryModalFlag = true;
     //this.isDisabled = true;
     this.enqueryId = eId;
     this.modalService.open(this.addEnqueryModal, { centered: true });
     this.common.spinnerShow();
-    this.fetchData();
+    this.fetchData(eId);
     this.isDisabled = true;
   }
 
-  fetchData() {
-    let param = {
-      "clientId": this.common.getClientId(),
+  getEmployeeeType():any{
+    const param = {
+      "clientId"    : this.common.getClientId(),
+      "userId"      : this.common.getuserId()
+    }
+    this.rest.getEmployeeType(param).subscribe((res:any) =>{
+      if(res.success == true){
+        this.employee_TypeList = res.response;
+      }
+    })
+  }
+
+  getDesignationId(designationId:any):any{
+    this.getAssignedEmployeeData(designationId);
+  }
+
+  getAssignedEmployeeData(designationId:any):any{
+    var param = {
       "userId": this.common.getuserId(),
-      "userType": this.common.getUserType(),
-      "enquiryId": this.enqueryId,
-      //.....add by me designation id////
-      // "designationId":this.employeeType
+      "clientId": this.common.getClientId(),
+      "countryId": this.country,
+      "stateId": this.state,
+      "zoneId": this.zone,
+      // "designationId": designationId
+      
+    }
+    // console.log("Get Assign Employee Data zoneid is",param);
+    this.rest.getAssignedEmployeeListFromApi(param).subscribe((res: any) => {
+      if (res.success == true) {
+        this.assignedEmployee_DataList = res.response;
+      }
+    })
+  } 
+
+  employeeAssigned(data: any):any{
+    console.log(data);
+    this.country = data.countryId;
+    this.state = data.stateId;
+    this.zone = data.zoneId;
+    this.approvalStatu = data.approval;
+    // this.enquiryModalFlag = true;
+    this.enqueryId = data.enqueryId;
+    // console.log("enquiry id>>>>",this.enqueryId);
+    // console.log("zone id is<<<", this.zone);
+    
+    this.modalService.open(this.assign, { centered: true });
+    this.isDisabled = true;
+    const param = {
+      "clientId"    : this.common.getClientId(),
+      "userId"      : this.common.getuserId(),
+      "userType"    : this.common.getUserType(),
+      "enquiryId"   : this.enqueryId,
+      "country"     : this.country,
+      "state"       : this.state,
+      "zone"        :this.zone
     };
-    this.rest.getEnqueryDataForEdit(param).subscribe((res: any) => {
-
-      // console.log("edit enquery response>>>>>", res);
-
+    // console.log("assign employee params<<<<<",param);
+    
+    this.rest.getAssignedEmloyee(param).subscribe((res: any) => {
       if (res.success) {
-        // console.log("bussiness id is >>",res.response.businessEmail);
+        // console.log("assigned emp response>>",res)
+        this.common.spinnerHide();
+        this.employeeType       = res.response[0].designationId;
+        this.getAssignedEmployeeData(this.employeeType);
+        this.assignedEmployee   = Number(res.response[0].assignTo); 
+        //.......following code for only assign date .......................//
+        if(res.response[0].assignDate!=null){
+        this.assignedDate       = this.common.getDateFormatNew3(res.response[0].assignDate).split(" ")[0];
+        }else{
+          this.assignedDate   = ""
+        }
+        // this.getAssignedEmployeeData(res.response[0].assignTo);
+        
+        // console.log("date",this.assignedDate);
+        //..........assignedDueDate in below.....//
+        
+        if(res.response[0].assignDueDate!=null){
+          this.assignDueDate       = this.common.getDateFormatNew3(res.response[0].assignDueDate).split(" ")[0];
+          }else{
+            this.assignDueDate   = ""
+          }
+          // this.getAssignedEmployeeData(res.response[0].assignDueDate);
+        
+        // console.log("assigned due date",this.assignDueDate);
+      }
+    })
+    // this.assignDueDate = new Date().toISOString().split('T')[0]; 
+
+
+    
+
+  }
+
+  //.........................................////........................................
+
+  fetchData(eId:any):any{
+    let param = {
+      "clientId"    : this.common.getClientId(),
+      "userId"      : this.common.getuserId(),
+      "userType"    : this.common.getUserType(),
+      "enquiryId"   : eId
+    }
+    this.rest.getEnqueryDataForEdit(param).subscribe((res: any) => {
+      if (res.success) {
         var fetchEnqueryData = [];
         fetchEnqueryData = res.response;
+        var counter = [];
         // var pinCode=[]
         // pinCode= res.response.pinCode
-
-        // console.log("pincode displayed>>", pinCode);
-        
+        // console.log("pincode displayed>>", pinCode);        
         // let businessIdGetter = res.response.businessType
         // console.log("FetchEnqueryData bussiness is :",businessIdGetter);
-
         this.common.spinnerHide();
         //console.log("Fetch Enquery Data by particular Enquery Id>>>>>", enqueryData);
         // this.enqueryId = fetchEnqueryData[0].enqueryId;
-
         this.enquiry_Source = fetchEnqueryData[0].enquerySourceId;
         this.enquiry_Type = fetchEnqueryData[0].enquerySourceTypeId;
         this.ownerFirstName = fetchEnqueryData[0].ownerFirstName;
         this.ownerLastName = fetchEnqueryData[0].ownerLastName;
+        if (fetchEnqueryData[0].ownerPhone != null && fetchEnqueryData[0].ownerPhone != "") {
+          if (fetchEnqueryData[0].ownerPhone.includes(",")) {
+            this.ownerPhnNo = [];
+            for (let obj of fetchEnqueryData[0].ownerPhone.split(",")) {
+              this.ownerPhnNo.push({ item: obj });
+            }
+          } else {
+            this.ownerPhnNo = [];
+            this.ownerPhnNo.push({ item: fetchEnqueryData[0].ownerPhone });
+          }
+        } else {
+          this.ownerPhnNo = [{ item: "" }];
+        }
         if (fetchEnqueryData[0].ownerPhone != null && fetchEnqueryData[0].ownerPhone != "") {
           if (fetchEnqueryData[0].ownerPhone.includes(",")) {
             this.ownerPhnNo = [];
@@ -208,16 +324,12 @@ export class EnqueryComponent implements OnInit {
         } else {
           this.ownerPhnNo = [{ item: "" }];
         }
-
-        // console.log("owner Phone Numbers>>",this.ownerPhnNo);
-        
+        // console.log("owner Phone Numbers>>",this.ownerPhnNo);        
         if (fetchEnqueryData[0].ownerEmail != null && fetchEnqueryData[0].ownerEmail != "") {
           if (fetchEnqueryData[0].ownerEmail.includes(",")) {
             this.ownerEmail = [];
             for (let obj of fetchEnqueryData[0].ownerEmail.split(",")) {
               this.ownerEmail.push({ item: obj });
-              // this.ownerEmail.push( item: obj );
-
             }
           } else {
             this.ownerEmail = [];
@@ -230,16 +342,13 @@ export class EnqueryComponent implements OnInit {
         if (this.businessType == "Existing" || this.businessType == "1")  {
           // this.organizationId = Number(this.businessType);
           // console.log("bussiness Id", fetchEnqueryData[0].businessId);
-
           this.organizationId = fetchEnqueryData[0].businessId;
-
           this.isDisabled = false;
-        }
-        
-        else {
+        } else {
           this.isDisabled = true;
           this.organizationId = fetchEnqueryData[0].businessId;
         }
+        
         // this.organizationId = fetchEnqueryData[0].businessId;
         this.buisnessName = fetchEnqueryData[0].businessName;
         this.buisnessAddress = fetchEnqueryData[0].businessAddress;
@@ -284,48 +393,50 @@ export class EnqueryComponent implements OnInit {
         this.pinCode = fetchEnqueryData[0].pinCode;
         this.notes = fetchEnqueryData[0].notes;
         this.employeeType = Number(fetchEnqueryData[0].designationId);
-        this.getDesignationId();
+        this.getDesignationId(fetchEnqueryData[0].designationId);
         this.assignedEmployee = Number(fetchEnqueryData[0].assignTo);
-        this.assignedDate = this.common.getDateFormatNew3(fetchEnqueryData[0].assignDate).split(" ")[0];
+        if(fetchEnqueryData[0].assignDate == null ){
+          this.assignedDate = "";
+          // this
+        } else {
+          this.assignedDate = this.common.getDateFormatNew3(fetchEnqueryData[0].assignDate).split(" ")[0];
+        }
       }
     })
   }
 
   //,,...........approval Status Enquery.................//
-  updateApprovalStatus() {
 
-    // console.warn("update status ");
+  updateApprovalStatus() {  
+        
+        if (this.selectedStatus == '' || this.selectedStatus == null) {
+          this.notifier.notify('error', 'Please Select Approval Status');
+          return;
+        }
+        // if (this.statusRemarks== '' || this.statusRemarks == null) {
+        //   this.notifier.notify('error', 'Please Select Remarks');
+        //   return;
+        // }
+    
     let req = {
-      // userId:this.userId,
-      // clientId:this.clientId,
-      // fieldVisitId: 8241,
-      // fieldVisitId: this.fieldVisitId,
-
-      // CRMapprovedStatus: this.selectedStatus,
-      // remarks: this.statusRemarks,
-      // userType:this.userType
-      "clientId" : this.common.getClientId(),
+    "clientId" : this.common.getClientId(),
     "userId" : this.common.getuserId(),
     "enquiryId" : this.enqueryId,
-    "approvedStatus" : this.selectedStatus,
+    "approvedStatus" : this.selectedStatus.toString(),
     "approvedRemark" : this.statusRemarks
     }
     // console.log("update Approval status params>>",req);
-    
-
-    this.rest.updateEnqueryApprovalStatus(req).subscribe((res: any) => {
-      console.log("Update Approval Status: ", res);
-      if (res.success) {
+      this.rest.updateEnqueryApprovalStatus(req).subscribe((res: any) => {
+      // console.log("Update Approval Status: ", res);
+       if (res.success) {
+        this.getEnqueryList();
         this.closeModal();
-        // this.selectedFieldVisitData = {};
-        // this.selectedStatus = "";
-        // this.statusRemarks = "";
-        // this.getFieldVisitDetailsById();
-        
-
         this.notifier.notify("success", res.message);
+    
       } else {
-        this.notifier.notify("error", res.message);
+        // this.notifier.notify("error", res.message);
+        this.notifier.notify("error", "Please select Remarks");
+
       }
     })
   }
@@ -345,14 +456,64 @@ export class EnqueryComponent implements OnInit {
       this.notifier.notify('error', 'Please Select Enquiry Type');
       return;
     }
+   
     if (this.ownerFirstName == '' || this.ownerFirstName == null) {
       this.notifier.notify('error', 'Please enter owner first name');
       return;
-    }
-    if (this.ownerLastName == '' || this.ownerLastName == null) {
-      this.notifier.notify('error', 'Please enter owner last name');
-      return;
-    }
+    } 
+
+
+    // if (this.ownerFirstName != '' || this.ownerFirstName != null) {
+    //   var c = 0
+    //   for (var i=0; i<this.ownerFirstName.length;i++){
+    //     if(this.ownerFirstName[0].charCodeAt(0)==32)
+    //     {
+    //       this.notifier.notify('error', 'Not allowed white space');
+    //       return;
+    //     }
+        
+    //       if(this.ownerFirstName[i].charCodeAt(0)==32 ){
+    //         c=c+1;
+            
+    //          if (c>1){
+    //           this.notifier.notify('error', 'not allowed white space');
+    //           return ;
+    //          }
+    //         // console.log("ok",this.ownerFirstName[i].charCodeAt(0));
+    //       }
+    //       // console.log("i is printed", this.ownerFirstName[i]);
+    //     }
+    //   }
+    // if(this.ownerFirstName.trim() !== ' '){
+    //   this.notifier.notify('error', 'field have white space');
+    //   return;
+    // }
+    // if (this.ownerLastName == '' || this.ownerLastName == null) {
+    //   this.notifier.notify('error', 'Please enter owner last name');
+    //   return;
+    // }
+    // if (this.ownerLastName != '' || this.ownerLastName != null) {
+    //   var c = 0
+    //   for (var i=0; i<this.ownerLastName.length;i++){
+    //     if(this.ownerLastName[0].charCodeAt(0)==32)
+    //     {
+    //       this.notifier.notify('error', 'Not allowed white space');
+    //       return;
+    //     }
+        
+    //       if(this.ownerLastName[i].charCodeAt(0)==32 ){
+    //         c=c+1;
+            
+    //          if (c>1){
+    //           this.notifier.notify('error', 'not allowed white space');
+    //           return ;
+    //          }
+    //       }
+    //     }
+    //   }
+    // if(this.ownerLastName.trim() !== '   '){
+    //   this.notifier.notify('error', 'field have white space');
+    // }
 
     for (let obj of this.ownerPhnNo) {
       if (obj.item == '' || obj.item == null) {
@@ -366,6 +527,12 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
+    // for (let obj of this.ownerEmail) {
+    //   if (obj.item == '' || obj.item == null) {
+    //     this.notifier.notify('error', 'Please Enter Owner email');
+    //     return;
+    //   }
+    // }
     for (let obj of this.ownerEmail) {
       if (obj.item != "") {
         if (this.common.mailFormatCheck(obj.item) == false) {
@@ -381,19 +548,29 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
+    
+    // if (this.address == '' || this.address == null) {
+    //   this.notifier.notify('error', 'Please Enter Address');
+    //   return;
+    // }
+    // if(this.address.trim() !== '   '){
+    //   this.notifier.notify('error', 'field have white space');
+    // }
+    // if (this.buisnessName == '' || this.buisnessName == null) {
+    //   this.notifier.notify('error', 'Please Enter Business Name');
+    //   return;
+    // } 
+    // if(this.buisnessName.trim() !== '   '){
+    //   this.notifier.notify('error', 'field have white space');
+    // }
 
-    if (this.address == '' || this.address == null) {
-      this.notifier.notify('error', 'Please Enter Address');
-      return;
-    }
-    if (this.buisnessName == '' || this.buisnessName == null) {
-      this.notifier.notify('error', 'Please Enter Business Name');
-      return;
-    }
-    if (this.buisnessAddress == '' || this.buisnessAddress == null) {
-      this.notifier.notify('error', 'Please Enter Business Address');
-      return;
-    }
+    // if (this.buisnessAddress == '' || this.buisnessAddress == null) {
+    //   this.notifier.notify('error', 'Please Enter Business Address');
+    //   return;
+    // }
+    // if(this.buisnessAddress.trim() !== '   '){
+    //   this.notifier.notify('error', 'field have white space');
+    // }
 
     // for (let obj of this.buisnessPhone) {
     //   if (obj.item == '' || obj.item == null) {
@@ -408,7 +585,12 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
-
+    // for (let obj of this.buisnessEmail) {
+    //   if (obj.item == '' || obj.item == null) {
+    //     this.notifier.notify('error', 'Please Enter Business email');
+    //     return;
+    //   }
+    // }
     for (let obj of this.buisnessEmail) {
       if (obj.item != "") {
         if (this.common.mailFormatCheck(obj.item) == false) {
@@ -424,9 +606,6 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
-
-
-
     if (this.country == '' || this.country == null) {
       this.notifier.notify('error', 'Please Select Country');
       return;
@@ -447,18 +626,18 @@ export class EnqueryComponent implements OnInit {
     //   this.notifier.notify('error', 'Please Enter Pincode');
     //   return;
     // }
-    if (this.employeeType == '' || this.employeeType == null) {
-      this.notifier.notify('error', 'Please select employee type');
-      return;
-    }
+    // if (this.employeeType == '' || this.employeeType == null) {
+    //   this.notifier.notify('error', 'Please select employee type');
+    //   return;
+    // }
     // if (this.assignedEmployee == '' || this.assignedEmployee == null) {
     //   this.notifier.notify('error', 'Please select assign employee');
     //   return;
     // }
-    if (this.assignedDate == '' || this.assignedDate == null) {
-      this.notifier.notify('error', 'Please choose assigned date');
-      return;
-    }
+    // if (this.assignedDate == '' || this.assignedDate == null) {
+    //   this.notifier.notify('error', 'Please choose assigned date');
+    //   return;
+    // }
 
     var ownerPhoneList = [];
     for (let obj of this.ownerPhnNo) {
@@ -512,9 +691,9 @@ export class EnqueryComponent implements OnInit {
       "createdBy": this.common.getuserId(),
       "enquiryPage": "crm"
     };
-    console.log("Request data for enquery Create>>>>>>>", param);
+    // console.log("Request data for enquery Create>>>>>>>", param);
     this.rest.sendDataFoInsertEnquery(param).subscribe((res: any) => {
-      console.log("enquery res for updated>>>>>", res);
+      // console.log("enquery res for updated>>>>>", res);
       if (res.success == true) {
         this.getEnqueryList();
         this.modalClose();
@@ -562,10 +741,49 @@ export class EnqueryComponent implements OnInit {
       this.notifier.notify('error', 'Please enter owner first name');
       return;
     }
-    if (this.ownerLastName == '' || this.ownerLastName == null) {
-      this.notifier.notify('error', 'Please enter owner last name');
-      return;
-    }
+    if (this.ownerFirstName != '' || this.ownerFirstName != null) {
+      var c = 0
+      for (var i=0; i<this.ownerFirstName.length;i++){
+        if(this.ownerFirstName[0].charCodeAt(0)==32)
+        {
+          this.notifier.notify('error', 'Not allowed white space');
+          return;
+        }
+        
+          if(this.ownerFirstName[i].charCodeAt(0)==32 ){
+            c=c+1;
+            
+             if (c>1){
+              this.notifier.notify('error', 'not allowed white space');
+              return ;
+             }
+          }
+        }
+      }
+  
+    // if (this.ownerLastName == '' || this.ownerLastName == null) {
+    //   this.notifier.notify('error', 'Please enter owner last name');
+    //   return;
+    // }
+    // if (this.ownerLastName != '' || this.ownerLastName != null) {
+    //   var c = 0
+    //   for (var i=0; i<this.ownerLastName.length;i++){
+    //     if(this.ownerLastName[0].charCodeAt(0)==32)
+    //     {
+    //       this.notifier.notify('error', 'Not allowed white space');
+    //       return;
+    //     }
+        
+    //       if(this.ownerLastName[i].charCodeAt(0)==32 ){
+    //         c=c+1;
+            
+    //          if (c>1){
+    //           this.notifier.notify('error', 'not allowed white space');
+    //           return ;
+    //          }
+    //       }
+    //     }
+    //   }
 
     for (let obj of this.ownerPhnNo) {
       if (obj.item == '' || obj.item == null) {
@@ -573,27 +791,27 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
-    for (let obj of this.ownerEmail) {
-      if (obj.item != "") {
-        if (this.common.mailFormatCheck(obj.item) == false) {
-          this.notifier.notify('error', 'Please Enter valid Owner email');
-          return;
-        }
-      }
-    }
+    // for (let obj of this.ownerEmail) {
+    //   if (obj.item != "") {
+    //     if (this.common.mailFormatCheck(obj.item) == false) {
+    //       this.notifier.notify('error', 'Please Enter valid Owner email');
+    //       return;
+    //     }
+    //   }
+    // }
 
-    if (this.address == '' || this.address == null) {
-      this.notifier.notify('error', 'Please Enter Address');
-      return;
-    }
-    if (this.buisnessName == '' || this.buisnessName == null) {
-      this.notifier.notify('error', 'Please Enter Business Name');
-      return;
-    }
-    if (this.buisnessAddress == '' || this.buisnessAddress == null) {
-      this.notifier.notify('error', 'Please Enter Business Address');
-      return;
-    }
+    // if (this.address == '' || this.address == null) {
+    //   this.notifier.notify('error', 'Please Enter Address');
+    //   return;
+    // }
+    // if (this.buisnessName == '' || this.buisnessName == null) {
+    //   this.notifier.notify('error', 'Please Enter Business Name');
+    //   return;
+    // }
+    // if (this.buisnessAddress == '' || this.buisnessAddress == null) {
+    //   this.notifier.notify('error', 'Please Enter Business Address');
+    //   return;
+    // }
 
     // for (let obj of this.buisnessPhone) {
     //   if (obj.item == '' || obj.item == null) {
@@ -602,14 +820,14 @@ export class EnqueryComponent implements OnInit {
     //   }
     // }
 
-    for (let obj of this.buisnessEmail) {
-      if (obj.item != "") {
-        if (this.common.mailFormatCheck(obj.item) == false) {
-          this.notifier.notify('error', 'Please Enter valid Business email');
-          return;
-        }
-      }
-    }
+    // for (let obj of this.buisnessEmail) {
+    //   if (obj.item != "") {
+    //     if (this.common.mailFormatCheck(obj.item) == false) {
+    //       this.notifier.notify('error', 'Please Enter valid Business email');
+    //       return;
+    //     }
+    //   }
+    // }
 
     if (this.country == '' || this.country == null) {
       this.notifier.notify('error', 'Please Select Country');
@@ -631,18 +849,18 @@ export class EnqueryComponent implements OnInit {
     //   this.notifier.notify('error', 'Please Enter Pincode');
     //   return;
     // }
-    if (this.employeeType == '' || this.employeeType == null) {
-      this.notifier.notify('error', 'Please select employee type');
-      return;
-    }
-    if (this.assignedEmployee == '' || this.assignedEmployee == null) {
-      this.notifier.notify('error', 'Please select assign employee');
-      return;
-    }
-    if (this.assignedDate == '' || this.assignedDate == null) {
-      this.notifier.notify('error', 'Please choose assigned date');
-      return;
-    }
+    // if (this.employeeType == '' || this.employeeType == null) {
+    //   this.notifier.notify('error', 'Please select employee type');
+    //   return;
+    // }
+    // if (this.assignedEmployee == '' || this.assignedEmployee == null) {
+    //   this.notifier.notify('error', 'Please select assign employee');
+    //   return;
+    // }
+    // if (this.assignedDate == '' || this.assignedDate == null) {
+    //   this.notifier.notify('error', 'Please choose assigned date');
+    //   return;
+    // }
 
     var ownerPhoneList = [];
     for (let obj of this.ownerPhnNo) {
@@ -666,8 +884,6 @@ export class EnqueryComponent implements OnInit {
       "userId": this.common.getuserId(),
       "userType": Number(this.common.getUserType()),
       "enquiryId": this.enqueryId,
-
-
       "enquirySourceTypeId": this.enquiry_Type,
       "enquirySourceId": this.enquiry_Source,
       "ownerFirstName": this.ownerFirstName,
@@ -682,6 +898,7 @@ export class EnqueryComponent implements OnInit {
       "countryId": this.country,
       "stateId": this.state,
       "districtId": this.district,
+      // "districtName":this.district,
       "cityVillage": this.city_Village,
       "zoneId": this.zone,
       "pincode": this.pinCode,
@@ -690,16 +907,17 @@ export class EnqueryComponent implements OnInit {
       "assignTo": this.assignedEmployee,
       "assignDate": this.assignedDate,
       "businessId": this.organizationId.toString(),
-
+      // "zoneName":this.zone,
       "businessType": this.businessType.toString(),
       "lattitude": "22.5726",
       "longitude": "88.3639",
       "createdBy": this.common.getuserId(),
-      "designationId": this.employeeType// add this new 
+      // "designationId": this.employeeType// add this new 
     };
+
     // console.log("Request data params for update enquiry>>>>>", param);
     this.rest.sendDataForEdit(param).subscribe((res: any) => {
-      console.log("updated resposne>>>", res);
+      // console.log("updated resposne>>>", res);
 
       if (res.success) {
         this.getEnqueryList();
@@ -710,25 +928,20 @@ export class EnqueryComponent implements OnInit {
   }
 
   approvalStatus(data: any) {
-    // alert("working");
-
-    this.selectedStatus = this.selectedStatus;
-    this.statusRemarks = data.CRMapprovedRemarks;
+    this.enqueryId = data.enqueryId;
+    // console.log("data of approval status",data);
+    this.selectedStatus = data.approvedStatus;
+    this.statusRemarks = data.approvedRemark;
     this.modalService.open(this.approvalmodal, { centered: true, size: 'sm' });
-
   }
-
-  employeeAssigned(data:any)
-  {
-    this.enquiryModalFlag = true;
-    //this.isDisabled = true;
-    // this.enqueryId = eId;
-    this.modalService.open(this.assign, { centered: true });
-
-  }
-
   modalClose() {
     this.modalService.dismissAll();
+    this.reset();
+    }
+  reset(){
+    this.assignedEmployee_DataList="";
+    // console.log("this is reset data >>>>" ,this.assignedEmployee);
+     
   }
 
   openEnqueryAddModal() {
@@ -765,16 +978,11 @@ export class EnqueryComponent implements OnInit {
       "clientId": this.common.getClientId()
     };
     this.rest.getEntityDataFromApi(param).subscribe((res: any) => {
-      // console.log("employee type response",res);
-
-      if (res.success == true) {
+       if (res.success == true) {
         this.enquiry_SourceList = res.response.enquirySource;
         this.enquiry_TypeList = res.response.enquiryType;
         this.country_DataList = res.response.countryData;
-        this.employee_TypeList = res.response.employeeType;
-
-      }
-      // console.log("Employee type select box>>>", this.employee_TypeList)
+     }
     })
   }
 
@@ -803,7 +1011,6 @@ export class EnqueryComponent implements OnInit {
     };
     this.rest.getDistrictDataFromApi(param).subscribe((res: any) => {
       if (res.success == true) {
-        //console.log(res);
         this.district_DataList = res.response;
       }
     })
@@ -822,34 +1029,6 @@ export class EnqueryComponent implements OnInit {
       if (res.success == true) {
         this.zone_DataList = res.response;
       }
-    })
-  }
-
-  getDesignationId() {
-    //.....i put this comment out bcz its calling again while clicking edit button 
-    //already edit api calling [api name: "getSelectedUsrs"]
-    this.getAssignedEmployeeData();
-  }
-
-  getAssignedEmployeeData() {
-    var param = {
-      "userId": this.common.getuserId(),
-      "clientId": this.common.getClientId(),
-      "countryId": this.country,
-      "stateId": this.state,
-      "zoneId": this.zone,
-      "designationId": this.employeeType
-
-    };
-    // console.log("Request data for getAssignedEmployeeData", param);
-    this.rest.getAssignedEmployeeListFromApi(param).subscribe((res: any) => {
-      // console.log("assigned Employee resposnse", res);
-
-      if (res.success == true) {
-        this.assignedEmployee_DataList = res.response;
-      }
-      // console.log("Assigned employee data select >>>>>>>",this.assignedEmployee_DataList);
-
     })
   }
 
@@ -920,19 +1099,28 @@ export class EnqueryComponent implements OnInit {
       "businessNameText": this.businessNameText,
       "countryId": this.country,
       "stateId": this.state,
+      "state": this.stateNameText,
+      "city": this.districtNameText,
+      "zone": this.zoneNameText,
       "designationId": this.employeeType //this i put
     };
+    // console.log("param", param)
     this.rest.getEnqueryDataFromApi(param).subscribe((res: any) => {
-      // console.log("Enquery res>>>>>>>>>>>",JSON.stringify(res));
       if (res.success == true) {
         this.enqueryData = res.response.data;
+       var counter = res.response.count;
+        // console.log("count response of list >>>", counter);
         //....this is my approval code....//
         this.selectedStatus=res.response.data.approvedStatus;
         this.statusRemarks=res.response.data.approvedRemark;
-        
-        // console.log("this is my approved status",this.selectedStatus)
         for (let a = 0; a < this.enqueryData.length; a++) {
-          this.enqueryData[a].assignDatetime = this.common.getDateFormat(this.enqueryData[a].assignDatetime);
+          if(this.enqueryData[a].assignDate != null){
+            this.enqueryData[a].assignDate = this.common.getDateFormat(this.enqueryData[a].assignDate);
+          }
+
+          if(this.enqueryData[a].assignDueDate != null){
+            this.enqueryData[a].assignDueDate = this.common.getDateFormat(this.enqueryData[a].assignDueDate);
+          }
         }
       } else {
         this.enqueryData = [];
@@ -1032,26 +1220,47 @@ export class EnqueryComponent implements OnInit {
   }
 
   //----------------------------- Enquery Delete-------------------//
+  
+  remove(id:any){
+    this.enqueryId = id;
+    this.modalService.open(this.deletemodal,{centered:true,size:"sm"});
+  }
 
-  // remove(id:any){
-  //   this.enqueryId = id;
-  //   this.modalService.open(this.deletemodal,{centered:true,size:"sm"});
-  // }
+  delete(){
+    const data = {
+      enquiryId: this.enqueryId
+    };
+    this.rest.deleteEnquiry(data).subscribe((res:any)=>{
+      if(res.success){
+        this.modalClose();
+        this.notifier.notify('success',res.message);
+        this.getEnqueryList();
 
-  // delete(){
-  //   const data = {
-  //     enquiryId: this.enqueryId
-  //   };
-  //   this.rest.deleteEnquiry(data).subscribe((res:any)=>{
-  //     if(res.success){
-  //       this.modalClose();
-  //       this.notifier.notify('success',res.message);
-  //     }
-  //   })
-  // }
+      }
+    })
+  }
 
   //-------------------------------  For Filter-------------------------------//
 
+  // searchByEnquirySource({target: {value}} :any):any {
+  //   if(value.length == 0){
+  //     this.getEnqueryList();
+  //   }else {
+  //     const param = {
+  //       "companyId"         : this.common.getClientId(),
+  //       "enquirySourceText" : value,
+  //       "limit": this.limit.toString(),
+  //       "offset": this.offset.toString(),
+  
+        
+  //     }
+  //     this.rest.getEnqueryDataFromApi(param).subscribe((res: any) => { 
+  //       if(res.success == true){
+  //         this.enqueryData = res.response;
+  //       }
+  //     })
+  //   }
+  // }
   searchByEnquirySource(event: any) {
     if (event.target.value.length >= 2) {
       this.enquirySourceText = event.target.value;
@@ -1103,7 +1312,7 @@ export class EnqueryComponent implements OnInit {
   }
 
   searchByBusinessName(event: any) {
-    if (event.target.value.length >= 2) {
+    if (event.target.value.length >= 1) {
       this.businessNameText = event.target.value;
       this.getEnqueryList();
     } else {
@@ -1111,7 +1320,41 @@ export class EnqueryComponent implements OnInit {
       this.getEnqueryList();
     }
   }
+  searchTextState=""as any
+  //....................its location filter..................//
+  searchByStateName(event: any){
+    if (event.target.value.length >= 2) {
+      this.stateNameText = event.target.value;
+      this.getEnqueryList();
+    } else {
+      this.stateNameText = "";
+      this.getEnqueryList();
+    }
+  
+  }
+ 
+  searchByDistrictName(event: any){
+    // console.log(">>>>>>>>>>>>>>>>>>>",event.target.value)
+    if (event.target.value.length >= 2) {
+      this.districtNameText = event.target.value;
+      this.getEnqueryList();
+    } else {
+      this.districtNameText = "";
+      this.getEnqueryList();
+    }
+  
+  }
+  searchByZoneName(event: any){
 
+    if (event.target.value.length >= 2) {
+      this.zoneNameText = event.target.value;
+      this.getEnqueryList();
+    } else {
+      this.zoneNameText = "";
+      this.getEnqueryList();
+    }
+  
+  }
   //----------------- Global Filter -------------------//
 
   globalSearch(event: any) {
@@ -1161,7 +1404,7 @@ export class EnqueryComponent implements OnInit {
       "businessNameText": this.businessNameText
     };
     this.rest.downloadFile(data).subscribe((res: any) => {
-      // console.log("Res>>>>>>>>>>>", res);
+      // console.log("Download data  Res>>>>>>>>>>>", res);
       if (res.success) {
         if (type == "1") {
           this.downloadPath = this.downloadBasePath + res.response.path.dir + res.response.excelPath;
@@ -1207,54 +1450,137 @@ export class EnqueryComponent implements OnInit {
   }
   //------------------------ Owner Record Update ----------------------------//
 
-  changeRecordOwner(data: any) {
-    console.log("Change Record Owner>>>>>>>>",data);
-    this.enqueryId = data.enqueryId;
-    this.ownerFirstName = data.ownerFirstName;
-    this.ownerLastName = data.ownerLastName;
-
-
-  
-    
-    if (data.ownerPhoneNo != null && data.ownerPhoneNo != "") {
-      if (data.ownerPhoneNo.includes(",")) {
-        this.ownerPhnNo = [];
-        for (let obj of data.ownerPhoneNo.split(",")) {
-          this.ownerPhnNo.push({ item: obj });
-        }
-      } else {
-        this.ownerPhnNo = [];
-        this.ownerPhnNo.push({ item: data.ownerPhoneNo });
-      }
-    } else {
-      this.ownerPhnNo = [{ item: "" }];
+  changeRecordOwner(eId: any) {
+      this.enqueryId =eId
+    // console.log("Change Record Owner>>>>>>>>",data);
+    const data={
+      "clientId"    : this.common.getClientId(),
+      "userId"      : this.common.getuserId(),
+      "userType"    : this.common.getUserType(),
+      "enquiryId"   : eId
     }
     
-    
-    if (data.ownerEmail != null && data.ownerEmail != "") {
-      if (data.ownerEmail.includes(",")) {
-        this.ownerEmail = [];
-        for (let obj of data.ownerEmail.split(",")) {
-          this.ownerEmail.push({ item: obj });
+       this.rest.getEnqueryDataForEdit(data).subscribe((res: any) => {
+      //  console.log("change owner record>>",res);
+        this.ownerFirstName = res.response[0].ownerFirstName
+        this.ownerLastName = res.response[0].ownerLastName
+        
+        if (res.response[0].ownerPhone != null && res.response[0].ownerPhone != "") {
+          if (res.response[0].ownerPhone.includes(",")) {
+            this.ownerPhnNo = [];
+            for (let obj of res.response[0].ownerPhone.split(",")) {
+              this.ownerPhnNo.push({ item: obj });
+            }
+          } else {
+            this.ownerPhnNo = [];
+            this.ownerPhnNo.push({ item: res.response[0].ownerPhone });
+          }
+        } else {
+          this.ownerPhnNo = [{ item: "" }];
         }
-      } else {
-        this.ownerEmail = [];
-        this.ownerEmail.push({ item: data.ownerEmail });
-      }
-    } else {
-      this.ownerEmail = [{ item: "" }];
-    }
+        if (res.response[0].ownerEmail != null && res.response[0].ownerEmail != "") {
+          if (res.response[0].ownerEmail.includes(",")) {
+            this.ownerEmail = [];
+            for (let obj of res.response[0].ownerEmail.split(",")) {
+              this.ownerEmail.push({ item: obj });
+            }
+          } else {
+            this.ownerEmail = [];
+            this.ownerEmail.push({ item: res.response[0].ownerEmail });
+          }
+        } else {
+          this.ownerEmail = [{ item: "" }];
+        }
+
+      
+    })
+
+
+    // this.enqueryId = data.enqueryId;
+    // this.ownerFirstName = data.ownerFirstName;
+    // this.ownerLastName = data.ownerLastName;    
+    // if (data.ownerPhone != null && data.ownerPhone != "") {
+    //   if (data.ownerPhoneNo.includes(",")) {
+    //     this.ownerPhnNo = [];
+    //     for (let obj of data.ownerPhoneNo.split(",")) {
+    //       this.ownerPhnNo.push({ item: obj });
+    //     }
+    //   } else {
+    //     this.ownerPhnNo = [];
+    //     this.ownerPhnNo.push({ item: data.ownerPhone });
+    //   }
+    // } else {
+    //   this.ownerPhnNo = [{ item: "" }];
+    // }
+    
+    
+    // if (data.ownerEmail != null && data.ownerEmail != "") {
+    //   if (data.ownerEmail.includes(",")) {
+    //     this.ownerEmail = [];
+    //     for (let obj of data.ownerEmail.split(",")) {
+    //       this.ownerEmail.push({ item: obj });
+    //     }
+    //   } else {
+    //     this.ownerEmail = [];
+    //     this.ownerEmail.push({ item: data.ownerEmail });
+    //   }
+    // } else {
+    //   this.ownerEmail = [{ item: "" }];
+    // }
     this.modalService.open(this.ownerRecords, { size: 'md' });
   }
   ownerRecordUpdate() {
     if (this.ownerFirstName == '' || this.ownerFirstName == null) {
       this.notifier.notify('error', 'Please enter owner first name');
       return;
-    }
-    if (this.ownerLastName == '' || this.ownerLastName == null) {
-      this.notifier.notify('error', 'Please enter owner last name');
-      return;
-    }
+    } 
+    if (this.ownerFirstName != '' || this.ownerFirstName != null) {
+      var c = 0
+      for (var i=0; i<this.ownerFirstName.length;i++){
+        if(this.ownerFirstName[0].charCodeAt(0)==32)
+        {
+          this.notifier.notify('error', 'Not allowed white space');
+          return;
+        }
+        
+          if(this.ownerFirstName[i].charCodeAt(0)==32 ){
+            c=c+1;
+            
+             if (c>1){
+              this.notifier.notify('error', 'not allowed white space');
+              return ;
+             }
+          }
+        }
+      }
+    // if (this.ownerLastName== '' || this.ownerLastName == null) {
+    //   this.notifier.notify('error', 'Please enter owner last name');
+    //   return;
+    // }
+    if (this.ownerLastName != '' || this.ownerLastName != null) {
+      var c = 0
+      for (var i=0; i<this.ownerLastName.length;i++){
+        if(this.ownerLastName[0].charCodeAt(0)==32)
+        {
+          this.notifier.notify('error', 'Not allowed white space');
+          return;
+        }
+        
+          if(this.ownerLastName[i].charCodeAt(0)==32 ){
+            c=c+1;
+            
+             if (c>1){
+              this.notifier.notify('error', 'not allowed white space');
+              return ;
+             }
+          }
+        }
+      }
+
+    // if(this.ownerLastName.trim() !== ' '){
+    //   this.notifier.notify('error', 'field have white space');
+
+    // }
 
     for (let obj of this.ownerPhnNo) {
       if (obj.item == '' || obj.item == null) {
@@ -1276,6 +1602,12 @@ export class EnqueryComponent implements OnInit {
         return;
       }
     }
+    // for (let obj of this.ownerEmail) {
+    //   if (obj.item == '' || obj.item == null) {
+    //     this.notifier.notify('error', 'Please Enter Owner  Email');
+    //     return;
+    //   }
+    // }
     for (let obj of this.ownerEmail) {
       if (obj.item != "") {
         if (this.common.mailFormatCheck(obj.item) == false) {
@@ -1311,7 +1643,7 @@ export class EnqueryComponent implements OnInit {
     //console.log("Request Data For Owner Record Update",data);
     this.rest.ownerRecordsUpdate(data).subscribe((res: any) => {
 
-      console.log("onwer records update resposne>>>>",res);
+      // console.log("onwer records update resposne>>>>",res);
       
       if (res.success) {
         this.getEnqueryList();
@@ -1324,4 +1656,56 @@ export class EnqueryComponent implements OnInit {
 
   }
 
+
+  assignEmployeUpdate() {
+
+    if (this.assignedEmployee == '' || this.assignedEmployee == null) {
+        this.notifier.notify('error', 'Please select assign employee');
+        return;
+      }
+      if (this.assignDueDate == '' || this.assignDueDate == null) {
+          this.notifier.notify('error', 'Please choose assigned Due date');
+          return;
+        }
+      const data = {
+      enquiryId: this.enqueryId,
+      ownerFirstName: this.ownerFirstName,
+      ownerLastName: this.ownerLastName,
+      // designationId: this.employeeType,
+      assignTo: this.assignedEmployee,
+      assignDate: this.assignedDate,
+      assignDueDate: this.assignDueDate,
+     };
+    //console.log("Request Data For Owner Record Update",data);
+      this.rest.assignUpate(data).subscribe((res: any) => {
+
+      // console.log("onwer records update resposne>>>>",res);
+      
+      if (res.success) {
+        this.getEnqueryList();
+        this.notifier.notify('success', res.message);
+        this.modalClose();
+      } else {
+        this.notifier.notify('error', res.message);
+      }
+    })
+
+  }
+   
+    // space(event:any){
+    //   console.log("1st log",event);
+    //   console.log("2nd log",event.target.selectionStart);
+
+    //   if (this.ownerFirstName == '' || this.ownerFirstName == null) {
+    //     if(event.charCode === 32){
+    //       this.notifier.notify('error', "sorry no space here");
+    //       // event.preventtDefault();
+    //       return ;
+    //       // alert("please write firstname")
+    //     }
+    //   }
+      
+    // }
+
 }
+

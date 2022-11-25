@@ -9,12 +9,12 @@ export const environment = {
 
 //  .................Local.................
   API_ROOT: 'http://3.7.173.54:8290/api/',
-  SECRECT: 'lingo@payload@node@response',
-  LOCAL_SECRECT: 'lingo@payload@react@request',
-  production: false,
   UPLOAD_IMAGE_BASE_PATH : 'http://3.7.173.54:8290',
   DASHBOARD_API_ROOT: 'http://3.7.173.54:6065/',
   SFA_API_ROOT: 'http://3.7.173.54:8281/api/',
+  SECRECT: 'lingo@payload@node@response',
+  LOCAL_SECRECT: 'lingo@payload@react@request',
+  production: false,
 
 
   // ......................Production.................

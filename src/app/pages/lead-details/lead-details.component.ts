@@ -57,6 +57,20 @@ export class LeadDetailsComponent implements OnInit {
   organizationId = '';
   organizationName: any;
   ownerName: any;
+  username:any;
+  visitStatusName ="" as any;
+  customerFeedback = "" as any;
+  nextFollowUpDate = "" as any;
+  convertedStatus = "" as any;
+  CRMapprovedStatus = "" as any;
+  itemNames = "" as any;
+  itemFeedback = "" as any;
+  createdAt = "" as any;
+  VisitDetails_Array: any = [];
+
+
+  customerName:any;
+  VisitDate:any;
   OrgPhone = [{ "OrgPhone": "" }];
   OrgEmail = [{ "OrgEmail": "" }];
   orgAnualRevenue: any;
@@ -189,6 +203,9 @@ export class LeadDetailsComponent implements OnInit {
   nextStageDropdownFlag: boolean = false;
   leadConverted = "" as any;
 
+  VisitDetails      : any;
+  visitNoteDetails  : any = [];
+  isVisitNote       : boolean = true;
 
   constructor(private route: ActivatedRoute, private common: CommonService, private leadRest: LeadService,
     private modalService: NgbModal, private notifier: NotifierService, private _location: Location,private router:Router) { }
@@ -203,12 +220,12 @@ export class LeadDetailsComponent implements OnInit {
     this.leadId = this.route.snapshot.paramMap.get('id');
     this.getLeadDetails();
     this.getAllCountry();
-    this.getLeadSource();
+    // this.getLeadSource();
     this.getAllUser();
     this.getAllProduct();
     this.getAllLeadActivitis();
     this.getAllLeadStatus();
-    this.getAllActivity();
+    // this.getAllActivity();
     this.upcomingActivity();
     this.getAllLeadNatureStatus();
 
@@ -220,8 +237,9 @@ export class LeadDetailsComponent implements OnInit {
   }
   getAllActivity(): any {
     this.leadRest.getActivityListMaster().subscribe((res: any) => {
+      // console.log("get All activity response are",res);
       if ((res.success) && (res.status)) {
-        this.activityMasterArray = res.response;
+        this.activityMasterArray = res.response;   
       }
     });
   }
@@ -236,18 +254,29 @@ export class LeadDetailsComponent implements OnInit {
       })
     }
   }
+  //.....................turn it off...................//
 
-  getLeadSource(): any {
-    let param = {
-      'clientId': this.clientId
-    };
-    this.leadRest.leadSource(param).subscribe((res: any) => {
-     // console.log("Response of getLeadSource function>>>>>>>>>>>>>", res);
-      if ((res.success) && (res.status === 200)) {
-        this.leadSourceArray = res.response;
-      }
-    });
-  }
+  // getLeadSource(): any {
+  //   let param = {
+  //     'clientId': this.clientId
+  //   };
+  //   this.leadRest.leadSource(param).subscribe((res: any) => {
+  //    // console.log("Response of getLeadSource function>>>>>>>>>>>>>", res);
+  //     if ((res.success) && (res.status === 200)) {
+  //       this.leadSourceArray = res.response;
+  //     }
+  //   });
+  // }
+
+  allStatusList: any = [
+    {
+      id: 0,
+      name: "No"
+    }, {
+      id: 1,
+      name: "Yes"
+    }
+  ];
   getAllCountry(): any {
     let param = {};
     this.leadRest.getAllCountry(param).subscribe((res: any) => {
@@ -298,8 +327,14 @@ export class LeadDetailsComponent implements OnInit {
   getAllUser() {
     let param = {};
     this.leadRest.getAllUser(param).subscribe((res: any) => {
+           
       if ((res.success) && (res.status == 200)) {
         this.allUser = res.response;
+      }
+      // console.log("get all users>>",this.allUser[0]);
+      for(var i=0; i < this.allUser[i].username.length; i++)
+      {   this.allUser[i]= this.allUser[i].username;
+          // console.log("all users have::>>",this.allUser[i]);
       }
     });
   }
@@ -308,8 +343,16 @@ export class LeadDetailsComponent implements OnInit {
       "clientId": this.clientId
     };
     this.leadRest.getAllProduct(param).subscribe((res: any) => {
+      // console.log("get all Product List :::",res);      
       if ((res.success) && (res.status == 200)) {
         this.getAllProductArray = res.response
+        //........jr used this for finding length of the array ..........//
+        for( var i=0; i < this.getAllProductArray[i].productName.length ; i++)
+        {
+          this.getAllProductArray[i] = this.getAllProductArray[i]
+          // console.log("get all product is >>>>",this.getAllProductArray[i]);
+           
+        }
       }
     });
   }
@@ -404,6 +447,19 @@ export class LeadDetailsComponent implements OnInit {
         // this.getAllCity(this.ORGstate);
         this.ORGdistrict = res.response[0].OrgDetails.cityId;
         // this.getAllZone(this.ORGdistrict);
+        //activity status...................................
+
+        if(JSON.stringify(res.response[0].VisitDetails) == '{}'){
+          this.VisitDetails = '';
+        } else {
+          this.isVisitNote = false;
+          this.VisitDetails = res.response[0].VisitDetails;
+        }
+        for(let i= 0; i<= res.response[0].VisitNoteDetails.length; i++){
+          res.response[0].VisitNoteDetails[i].createdAt = this.common.getDateFormat(res.response[0].VisitNoteDetails[i].createdAt)
+          this.visitNoteDetails = res.response[0].VisitNoteDetails;
+        }
+        //..............................................
         this.ORGzone = res.response[0].OrgDetails.zoneId;
         this.ORG_GEO = res.response[0].OrgDetails.goLocation;
         this.ORG_LAT = res.response[0].OrgDetails.latitude;
@@ -413,9 +469,7 @@ export class LeadDetailsComponent implements OnInit {
         this.description = [{ "desc": res.response[0].OrgDetails.description }];
         this.orgDescription = res.response[0].OrgDetails.description;
         let currentCompetitor = [];
-
         //console.log("Competitor>>>>>>>>>>>>>", res.response[0].Competitor.length);
-
         for (let h = 0; h < res.response[0].Competitor.length; h++) {
           currentCompetitor.push({
             "productName": String(res.response[0].Competitor[h].productName),
@@ -432,7 +486,6 @@ export class LeadDetailsComponent implements OnInit {
           }
         }
        // console.log("Current Competitor>>>>>>>>", currentCompetitor);
-
         let currentliUsing = [];
         let compititor = [];
         for (let k = 0; k < currentCompetitor.length; k++) {
@@ -538,9 +591,13 @@ export class LeadDetailsComponent implements OnInit {
       "userId": this.userId,
       "leadId": this.leadId,
       "userType": this.userType,
-
+      // "clientId":this.common.getClientId(),
+      // "limit": "10",
+      // "offset": "0"
     };
     this.leadRest.getAllActivites(param).subscribe((res: any) => {
+      // console.log("get all Activities api >>",res);
+      
       if ((res.success) && (res.status == 200)) {
         this.allActivityList = res.response;
         for (let i = 0; i < this.allActivityList.length; i++) {
@@ -568,7 +625,7 @@ export class LeadDetailsComponent implements OnInit {
         this.notifier.notify('success', res.message);
         this.closeModal();
         this.getAllCountry();
-        this.getLeadSource();
+        // this.getLeadSource();
         this.getAllUser();
         this.getAllProduct();
         this.getLeadDetails();
@@ -885,7 +942,7 @@ export class LeadDetailsComponent implements OnInit {
       lostReason: this.finalLostStatus === "" ? null : this.finalLostStatus,
       lostDescription: this.finalLostDescription === "" ? null : this.finalLostDescription
     };
-    console.log("Request Data for Lead Stage Change:::", data);
+    // console.log("Request Data for Lead Stage Change:::", data);
 
     this.leadRest.leadMarkAsComplete(data).subscribe((res: any) => {
       if (res.success) {
@@ -1011,6 +1068,33 @@ export class LeadDetailsComponent implements OnInit {
       }
     })
       
+  }
+  getConvertionStatusForHTML(val: any) {
+    let str: any = "";
+    if (val == 1) {
+      str = "No";
+    } else {
+      str = "YES"
+    }
+    return str;
+  }
+  getStatusForHTML(val: any) {
+    let str: any = "";
+    if (val == 1) {
+      str = "Converted";
+    } else {
+      str = "Not Converted"
+    }
+    return str;
+  }
+  getStatusForHTML1(val: any) {
+    let str: any = "";
+    if (val == null) {
+      str = "N/A";
+    } else {
+      str = " "
+    }
+    return str;
   }
 
 

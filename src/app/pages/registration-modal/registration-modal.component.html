@@ -59,7 +59,8 @@
                             </select> -->
                             <div class="ng-autocomplete">
                                 <ng-autocomplete [data]="allExistingUser" [searchKeyword]="keyword"
-                                 placeholder="Search from  Existing Contacts" (keyup)="nameSearch($event)"
+                                 placeholder="Search from  Existing Contacts"
+                                  (keyup)="nameSearch($event)"
                                     (change)="existingContactList()" [(ngModel)]="contactName"
                                     (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
                                     (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"

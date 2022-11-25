@@ -7,6 +7,7 @@ export const environment = {
   //UPLOAD_IMAGE_BASE_PATH : 'http://34.222.100.29:8290/',
   UPLOAD_IMAGE_BASE_PATH : 'http://3.7.173.54:8290',
   DASHBOARD_API_ROOT: 'http://3.7.173.54:6065/',
+  SFA_API_ROOT: 'http://3.7.173.54:8281/api/'
 };
 
 // export const environment = {
@@ -15,5 +16,6 @@ export const environment = {
 //   UPLOAD_IMAGE_BASE_PATH : 'https://api.chalobecho.com',
 //   DASHBOARD_API_ROOT: 'https://api3.chalobecho.com/',
 //   SECRECT: 'lingo@payload@node@response',
-//   LOCAL_SECRECT: 'lingo@payload@react@request'
+//   LOCAL_SECRECT: 'lingo@payload@react@request',
+//   SFA_API_ROOT: 'https://api2.chalobecho.com/api/'
 // };

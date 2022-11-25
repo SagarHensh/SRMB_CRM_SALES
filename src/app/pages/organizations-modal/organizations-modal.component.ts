@@ -138,9 +138,13 @@ export class OrganizationsModalComponent implements OnInit {
             }
 
             for (let obj of this.orgEmail) {
+                if (obj.item != "") {
+                    if (this.common.mailFormatCheck(obj.item) == false) {
+                      this.notifierService.notify('error', 'Please Enter valid Owner email');
+                      return;
+                    }
+                  }
                 if (obj.item == "" || obj.item == null) {
-                    // this.notifierService.notify('error', "Please enter email id");
-                    // return;
                 if (obj.item != "") {
                     //console.log("Email>>>>>>>>>>>",obj.item);
                     //console.log("format check>>>>>>>",this.common.mailFormatCheck(obj.item));
@@ -150,25 +154,18 @@ export class OrganizationsModalComponent implements OnInit {
                     }
                 }
             }
-
-          
-
-
-         
-             
                 // else {
                 //     this.notifierService.notify('error', "Add new Email must be field");
 
                 // }
          
-
-
             if (this.orgEmail.length > 1) {
                 // if (this.orgEmail[0].item !== obj.item) {
                 if (this.orgEmail[0].item && this.orgEmail[1].item == "") {
 
                     this.notifierService.notify('error', "Pleaase add email");
-                    var addmail= this.orgEmail[1]
+                    var addmail= this.orgEmail[1];
+                    return;
                 }
                 else{
                     if (this.orgEmail[0].item == this.orgEmail[1].item) {
@@ -179,7 +176,6 @@ export class OrganizationsModalComponent implements OnInit {
                
             }
         }
-
             // if (this.orgEmail.length > 1) {
             //     if (this.orgEmail[0].item == this.orgEmail[1].item) {
             //         this.notifierService.notify('error', "please enter email id");
@@ -192,8 +188,6 @@ export class OrganizationsModalComponent implements OnInit {
         //         return;
         //     }
         // }
-
-
             if (this.orgDesc == "" || this.orgDesc == null) {
                 this.notifierService.notify('error', "Please enter organization description");
                 return;
@@ -255,18 +249,18 @@ export class OrganizationsModalComponent implements OnInit {
                 }
             }
             // emailValidation Take away 
-            // for (let obj of this.email) {
-            //     if (obj.item == "" || obj.item == null) {
-            //         this.notifierService.notify('error', "Please enter email id");
-            //         return;
-            //     }
-            //     if (obj.item != "") {
-            //         if (this.common.mailFormatCheck(obj.item) == false) {
-            //             this.notifierService.notify('error', "Please enter valid email id");
-            //             return;
-            //         }
-            //     }
-            // }
+            for (let obj of this.email) {
+                // if (obj.item == "" || obj.item == null) {
+                //     this.notifierService.notify('error', "Please enter email id");
+                //     return;
+                // }
+                if (obj.item != "") {
+                    if (this.common.mailFormatCheck(obj.item) == false) {
+                        this.notifierService.notify('error', "Please enter valid email id");
+                        return;
+                    }
+                }
+            }
             if (this.email.length > 1) {
                 if (this.email[0].item == this.email[1].item) {
                     this.notifierService.notify('error', "Alternate Email must be different");

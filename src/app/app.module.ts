@@ -8,6 +8,8 @@ import {HttpClient, HttpClientModule,HttpHeaders } from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {HttpInterceptorService} from "./http-interceptor.service";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+
 // import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 
@@ -27,10 +29,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     // AutocompleteLibModule
   ],
-  providers: [{
+  providers: [
+    DatePipe,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpInterceptorService,
-    multi: true
+    multi: true,
+    
   }],
   bootstrap: [AppComponent]
 })

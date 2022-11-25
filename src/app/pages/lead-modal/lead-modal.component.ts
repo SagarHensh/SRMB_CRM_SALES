@@ -243,16 +243,18 @@ export class LeadModalComponent implements OnInit {
       
     });
   }
-  getLeadSource(): any {
-    let param = {
-      'clientId': this.clientId
-    };
-    this.leadRest.leadSource(param).subscribe((res: any) => {
-      if ((res.success) && (res.status === 200)) {
-        this.leadSourceArray = res.response;
-      }
-    });
-  }
+
+  //................turn it off.................//
+  // getLeadSource(): any {
+  //   let param = {
+  //     'clientId': this.clientId
+  //   };
+  //   this.leadRest.leadSource(param).subscribe((res: any) => {
+  //     if ((res.success) && (res.status === 200)) {
+  //       this.leadSourceArray = res.response;
+  //     }
+  //   });
+  // }
   getAllUser() {
     let param = {};
     this.leadRest.getAllUser(param).subscribe((res: any) => {
@@ -604,14 +606,14 @@ export class LeadModalComponent implements OnInit {
       //     return false;
       //   }
       // }
-      // for (let obj of this.email) {
-      //   if (obj.email != "") {
-      //     if (this.common.mailFormatCheck(obj.email) == false) {
-      //       this.notifier.notify('error', "Please enter valid email");
-      //       return;
-      //     }
-      //   }
-      // }
+      for (let obj of this.email) {
+        if (obj.email != "") {
+          if (this.common.mailFormatCheck(obj.email) == false) {
+            this.notifier.notify('error', "Please enter valid email");
+            return;
+          }
+        }
+      }
 
       if (this.email.length > 1) {
         if (this.email[0].email == this.email[1].email) {
@@ -727,15 +729,15 @@ export class LeadModalComponent implements OnInit {
       //   }
       // }
 
-      // for (let obj of this.OrgEmail) {
-      //   if (obj.OrgEmail != "") {
-      //     //console.log("org Emailllllllllllll", obj.OrgEmail);
-      //     if (this.common.mailFormatCheck(obj.OrgEmail) == false) {
-      //       this.notifier.notify('error', "Please enter valid organization mail");
-      //       return;
-      //     }
-      //   }
-      // }
+      for (let obj of this.OrgEmail) {
+        if (obj.OrgEmail != "") {
+          //console.log("org Emailllllllllllll", obj.OrgEmail);
+          if (this.common.mailFormatCheck(obj.OrgEmail) == false) {
+            this.notifier.notify('error', "Please enter valid organization mail");
+            return;
+          }
+        }
+      }
 
       if (this.OrgEmail.length > 1) {
         if (this.OrgEmail[0].OrgEmail == this.OrgEmail[1].OrgEmail) {
